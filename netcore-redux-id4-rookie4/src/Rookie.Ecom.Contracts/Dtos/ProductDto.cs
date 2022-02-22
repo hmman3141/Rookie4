@@ -5,13 +5,11 @@ namespace Rookie.Ecom.Contracts.Dtos
 {
     public class ProductDto : BaseDto
     {
-        public string Name { get; set; }
+        public string ProductName { get; set; }
 
         public string Desc { get; set; }
 
-        public decimal Price { get; set; }
-
-        public decimal? Cost { get; set; }
+        public int Price { get; set; }
 
         public bool IsFeatured { get; set; }
 
@@ -22,5 +20,7 @@ namespace Rookie.Ecom.Contracts.Dtos
         public CategoryDto Category { get; set; }
 
         public ICollection<ProductPictureDto> ProductPictures { get; set; }
+
+        public ICollection<RatingDto> Ratings { get; set; }
     }
 }

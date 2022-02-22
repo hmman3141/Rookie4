@@ -26,7 +26,7 @@ namespace Rookie.Ecom.UnitTests.API.Validators.TestData
                     "Suspendisse pede pharetra nec praesent cursus nibh tortor pharetra ante commodo et.",
                     string.Format(ErrorTypes.Common.MaxLengthError, ValidationRules.CategoryRules.MaxLenghCharactersForName)
                 },
-                new object[] { null, string.Format(ErrorTypes.Common.RequiredError, nameof(CategoryDto.Name))},
+                new object[] { null, string.Format(ErrorTypes.Common.RequiredError, nameof(CategoryDto.CategoryName))},
             };
         }
 

@@ -27,8 +27,8 @@ namespace Rookie.Ecom.UnitTests.API.Validators
         [MemberData(nameof(CategoryTestData.ValidTexts), MemberType = typeof(CategoryTestData))]
         public void NotHaveErrorWhenNameIsvalid(string name) =>
             _testRunner
-                .For(m => m.Name = name)
-                .ShouldNotHaveErrorsFor(m => m.Name);
+                .For(m => m.CategoryName = name)
+                .ShouldNotHaveErrorsFor(m => m.CategoryName);
 
         [Theory]
         [MemberData(nameof(CategoryTestData.ValidTexts), MemberType = typeof(CategoryTestData))]
@@ -41,8 +41,8 @@ namespace Rookie.Ecom.UnitTests.API.Validators
         [MemberData(nameof(CategoryTestData.InvalidNames), MemberType = typeof(CategoryTestData))]
         public void HaveErrorWhenNameIsInvalid(string name, string errorMessage) =>
             _testRunner
-                .For(m => m.Name = name)
-                .ShouldHaveErrorsFor(m => m.Name, errorMessage);
+                .For(m => m.CategoryName = name)
+                .ShouldHaveErrorsFor(m => m.CategoryName, errorMessage);
 
         [Theory]
         [MemberData(nameof(CategoryTestData.InvalidDescs), MemberType = typeof(CategoryTestData))]
@@ -54,7 +54,7 @@ namespace Rookie.Ecom.UnitTests.API.Validators
             ValidationResult result = validator.Validate(new CategoryDto
             {
                 Id = System.Guid.NewGuid(),
-                Name = "test",
+                CategoryName = "test",
                 Desc = desc
             });
 

@@ -57,7 +57,7 @@ namespace Rookie.Ecom.UnitTests.Business
             {
                 Desc = "code",
                 Id = Guid.NewGuid(),
-                Name = "Name"
+                CategoryName = "Name"
             };
 
             _categoryRepository.Setup(x => x.GetByIdAsync(entity.Id)).Returns(Task.FromResult(entity));
@@ -82,14 +82,14 @@ namespace Rookie.Ecom.UnitTests.Business
             {
                 Desc = "code",
                 Id = Guid.NewGuid(),
-                Name = "name"
+                CategoryName = "name"
             };
 
             var categoryDto = new CategoryDto()
             {
                 Desc = "code",
                 Id = Guid.NewGuid(),
-                Name = "name"
+                CategoryName = "name"
             };
             _categoryRepository.Setup(x => x
                 .GetByAsync(It.IsAny<Expression<Func<Category, bool>>>(), It.IsAny<string>()))

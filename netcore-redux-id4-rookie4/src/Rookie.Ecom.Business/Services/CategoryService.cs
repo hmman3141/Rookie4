@@ -62,7 +62,7 @@ namespace Rookie.Ecom.Business.Services
 
         public async Task<CategoryDto> GetByNameAsync(string name)
         {
-            var category = await _baseRepository.GetByAsync(x => x.Name == name);
+            var category = await _baseRepository.GetByAsync(x => x.CategoryName == name);
             return _mapper.Map<CategoryDto>(category);
         }
 
@@ -70,9 +70,9 @@ namespace Rookie.Ecom.Business.Services
         {
             var query = _baseRepository.Entities;
 
-            query = query.Where(x => string.IsNullOrEmpty(name) || x.Name.Contains(name));
+            query = query.Where(x => string.IsNullOrEmpty(name) || x.CategoryName.Contains(name));
 
-            query = query.OrderBy(x => x.Name);
+            query = query.OrderBy(x => x.CategoryName);
 
             var assets = await query
                 .AsNoTracking()

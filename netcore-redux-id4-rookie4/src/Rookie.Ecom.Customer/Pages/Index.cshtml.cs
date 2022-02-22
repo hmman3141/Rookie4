@@ -14,14 +14,17 @@ namespace Rookie.Ecom.Customer.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly ICategoryService _categoryService;
+        private readonly IProductService _productService;
 
-        public IndexModel(ILogger<IndexModel> logger, ICategoryService categoryService)
+        public IndexModel(ILogger<IndexModel> logger, ICategoryService categoryService, IProductService productService)
         {
             _logger = logger;
             _categoryService = categoryService;
+            _productService = productService;
         }
 
-        public IEnumerable<CategoryDto> GetAsync => _categoryService.GetAllAsync().Result;
+        public IEnumerable<CategoryDto> Categories => _categoryService.GetAllAsync().Result;
+        public IEnumerable<ProductDto> Products => _productService.GetAllAsync().Result;
 
         public void OnGet()
         {

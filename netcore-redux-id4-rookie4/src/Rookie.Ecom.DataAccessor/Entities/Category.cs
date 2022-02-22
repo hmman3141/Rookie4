@@ -7,7 +7,7 @@ namespace Rookie.Ecom.DataAccessor.Entities
     {
         [Required]
         [StringLength(maximumLength: 50)]
-        public string Name { get; set; }
+        public string CategoryName { get; set; }
 
         [Required]
         [StringLength(maximumLength: 100)]

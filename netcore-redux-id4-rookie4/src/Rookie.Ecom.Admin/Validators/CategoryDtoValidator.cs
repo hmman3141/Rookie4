@@ -14,14 +14,14 @@ namespace Rookie.Ecom.Admin.Validators
                  .NotNull()
                  .WithMessage(x => string.Format(ErrorTypes.Common.RequiredError, nameof(x.Id)));
 
-            RuleFor(m => m.Name)
+            RuleFor(m => m.CategoryName)
                   .NotEmpty()
-                  .WithMessage(x => string.Format(ErrorTypes.Common.RequiredError, nameof(x.Name)));
+                  .WithMessage(x => string.Format(ErrorTypes.Common.RequiredError, nameof(x.CategoryName)));
 
-            RuleFor(m => m.Name)
+            RuleFor(m => m.CategoryName)
                .MaximumLength(ValidationRules.CategoryRules.MaxLenghCharactersForName)
                .WithMessage(string.Format(ErrorTypes.Common.MaxLengthError, ValidationRules.CategoryRules.MaxLenghCharactersForName))
-               .When(m => !string.IsNullOrWhiteSpace(m.Name));
+               .When(m => !string.IsNullOrWhiteSpace(m.CategoryName));
 
             RuleFor(m => m.Desc)
                .MaximumLength(ValidationRules.CategoryRules.MaxLenghCharactersForDesc)
@@ -31,7 +31,7 @@ namespace Rookie.Ecom.Admin.Validators
             RuleFor(x => x).MustAsync(
              async (dto, cancellation) =>
              {
-                 var exit = await categoryService.GetByNameAsync(dto.Name);
+                 var exit = await categoryService.GetByNameAsync(dto.CategoryName);
                  return exit == null || exit.Id != dto.Id;
              }
           ).WithMessage("Duplicate record");

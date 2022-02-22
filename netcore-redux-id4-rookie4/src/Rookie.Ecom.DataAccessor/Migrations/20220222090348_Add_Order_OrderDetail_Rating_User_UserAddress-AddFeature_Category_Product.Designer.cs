@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Rookie.Ecom.DataAccessor.Data;
 
 namespace Rookie.Ecom.DataAccessor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220222090348_Add_Order_OrderDetail_Rating_User_UserAddress-AddFeature_Category_Product")]
+    partial class Add_Order_OrderDetail_Rating_User_UserAddressAddFeature_Category_Product
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -221,34 +223,6 @@ namespace Rookie.Ecom.DataAccessor.Migrations
                     b.ToTable("Rating");
                 });
 
-            modelBuilder.Entity("Rookie.Ecom.DataAccessor.Entities.Role", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Pubished")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("RoleName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Role");
-                });
-
             modelBuilder.Entity("Rookie.Ecom.DataAccessor.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -295,21 +269,6 @@ namespace Rookie.Ecom.DataAccessor.Migrations
                     b.HasKey("UserID", "Number");
 
                     b.ToTable("UserAddress");
-                });
-
-            modelBuilder.Entity("Rookie.Ecom.DataAccessor.Entities.UserRole", b =>
-                {
-                    b.Property<Guid?>("UserID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("RoleID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("UserID", "RoleID");
-
-                    b.HasIndex("RoleID");
-
-                    b.ToTable("UserRole");
                 });
 
             modelBuilder.Entity("Rookie.Ecom.DataAccessor.Entities.Order", b =>
@@ -388,25 +347,6 @@ namespace Rookie.Ecom.DataAccessor.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Rookie.Ecom.DataAccessor.Entities.UserRole", b =>
-                {
-                    b.HasOne("Rookie.Ecom.DataAccessor.Entities.Role", "Role")
-                        .WithMany("UserRoles")
-                        .HasForeignKey("RoleID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Rookie.Ecom.DataAccessor.Entities.User", "User")
-                        .WithMany("UserRoles")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Role");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Rookie.Ecom.DataAccessor.Entities.Category", b =>
                 {
                     b.Navigation("Products");
@@ -424,11 +364,6 @@ namespace Rookie.Ecom.DataAccessor.Migrations
                     b.Navigation("Ratings");
                 });
 
-            modelBuilder.Entity("Rookie.Ecom.DataAccessor.Entities.Role", b =>
-                {
-                    b.Navigation("UserRoles");
-                });
-
             modelBuilder.Entity("Rookie.Ecom.DataAccessor.Entities.User", b =>
                 {
                     b.Navigation("Orders");
@@ -436,8 +371,6 @@ namespace Rookie.Ecom.DataAccessor.Migrations
                     b.Navigation("Ratings");
 
                     b.Navigation("UserAddresses");
-
-                    b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618
         }

@@ -39,7 +39,7 @@ namespace Rookie.Ecom.IntegrationTests
             var categoryService = new CategoryService(_categoryRepository, _mapper);
             var categoryController = new CategoryController(categoryService);
 
-            var newCategory = new CategoryDto { Name = "Test Category", Desc = "TC" };
+            var newCategory = new CategoryDto { CategoryName = "Test Category", Desc = "TC" };
 
             // Act
             var result = await categoryController.CreateAsync(newCategory);
@@ -51,7 +51,7 @@ namespace Rookie.Ecom.IntegrationTests
             var createdResult = Assert.IsType<CreatedResult>(result.Result);
             var returnValue = Assert.IsType<CategoryDto>(createdResult.Value);
 
-            Assert.Equal(newCategory.Name, returnValue.Name);
+            Assert.Equal(newCategory.CategoryName, returnValue.CategoryName);
             Assert.Equal(newCategory.Desc, returnValue.Desc);
 
           
@@ -62,13 +62,13 @@ namespace Rookie.Ecom.IntegrationTests
         public async Task Add_Exist_Category_ExistedName()
         {
             // Arrange
-            var existCategory = new Category { Id = Guid.NewGuid(), Name = "Laptop", Desc = "LT" };
+            var existCategory = new Category { Id = Guid.NewGuid(), CategoryName = "Laptop", Desc = "LT" };
             await _categoryRepository.AddAsync(existCategory);
 
             var categoryService = new CategoryService(_categoryRepository, _mapper);
             var categoryController = new CategoryController(categoryService);
 
-            var newCategory = new CategoryDto { Name = "Laptop 2", Desc = "ABC" };
+            var newCategory = new CategoryDto { CategoryName = "Laptop 2", Desc = "ABC" };
 
             // Act
             var result = await categoryController.CreateAsync(newCategory);
@@ -81,7 +81,7 @@ namespace Rookie.Ecom.IntegrationTests
             var returnValue = Assert.IsType<CategoryDto>(createdResult.Value);
 
             Assert.Equal(newCategory.Desc, returnValue.Desc);
-            Assert.Equal(newCategory.Name, returnValue.Name);
+            Assert.Equal(newCategory.CategoryName, returnValue.CategoryName);
 
             returnValue.Should().NotBeNull();
         }
@@ -90,10 +90,10 @@ namespace Rookie.Ecom.IntegrationTests
         public async Task Get_All_Categories()
         {
             //Arrange
-            var category1 = new Category { Name = "Cate 1", Desc = "Code1" };
-            var category2 = new Category { Name = "Cate 2", Desc = "Code2" };
-            var category3 = new Category { Name = "Cate 3", Desc = "Code3" };
-            var category4 = new Category { Name = "Cate 4", Desc = "Code4" };
+            var category1 = new Category { CategoryName = "Cate 1", Desc = "Code1" };
+            var category2 = new Category { CategoryName = "Cate 2", Desc = "Code2" };
+            var category3 = new Category { CategoryName = "Cate 3", Desc = "Code3" };
+            var category4 = new Category { CategoryName = "Cate 4", Desc = "Code4" };
             await _categoryRepository.AddAsync(category1);
             await _categoryRepository.AddAsync(category2);
             await _categoryRepository.AddAsync(category3);

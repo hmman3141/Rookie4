@@ -13,12 +13,20 @@
             <th>Desc</th>
             <th>ImageUrl</th>
         </tr>
-        @foreach (var temp in Model.GetAsync)
+        @foreach (var temp in Model.Categories)
         {
             <tr>
-                <th>@temp.Name</th>
+                <th>@temp.CategoryName</th>
                 <th>@temp.Desc</th>
                 <th>@temp.ImageUrl</th>
+            </tr>
+        }
+        @foreach (var temp in Model.Products)
+        {
+            <tr>
+                <th>
+                    @temp.ProductName
+                </th>
             </tr>
         }
     </table>
