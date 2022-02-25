@@ -8,15 +8,11 @@ using System.Threading.Tasks;
 
 namespace Rookie.Ecom.DataAccessor.Entities
 {
-    public class UserAddress
+    public class UserAddress:BaseEntity
     {
-        [Key]
-        [Column(Order=0)]
         public Guid? UserID { get; set; }
         public User User { get; set; }
 
-        [Key]
-        [Column(Order=1)]
         public int Number { get; set; }
 
 

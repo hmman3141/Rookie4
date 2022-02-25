@@ -2,6 +2,7 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
+    Layout = "./Shared/_Layout.cshtml";
 }
 
 <div class="text-center">
@@ -16,9 +17,9 @@
         @foreach (var temp in Model.Categories)
         {
             <tr>
-                <th>@temp.CategoryName</th>
-                <th>@temp.Desc</th>
-                <th>@temp.ImageUrl</th>
+                <th class="navbar-brand">@temp.CategoryName</th>
+                <th class="btn btn-primary">@temp.Desc</th>
+                <th class="$pink-200">@temp.ImageUrl</th>
             </tr>
         }
         @foreach (var temp in Model.Products)

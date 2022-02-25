@@ -55,11 +55,6 @@ namespace Rookie.Ecom.DataAccessor.Data
             builder.Entity<OrderDetail>(entity =>
             {
                 entity.ToTable(name: "OrderDetail");
-                entity.HasKey(table => new
-                {
-                    table.OrderID,
-                    table.ProductID
-                });
             });
 
             builder.Entity<ProductPicture>(entity =>
@@ -70,11 +65,6 @@ namespace Rookie.Ecom.DataAccessor.Data
             builder.Entity<Rating>(entity =>
             {
                 entity.ToTable(name: "Rating");
-                entity.HasKey(table => new
-                {
-                    table.UserID,
-                    table.ProductID
-                });
             });
 
             builder.Entity<User>(entity =>
@@ -90,21 +80,11 @@ namespace Rookie.Ecom.DataAccessor.Data
             builder.Entity<UserAddress>(entity =>
             {
                 entity.ToTable(name: "UserAddress");
-                entity.HasKey(table => new
-                {
-                    table.UserID,
-                    table.Number
-                });
             });
 
             builder.Entity<UserRole>(entity =>
             {
                 entity.ToTable(name: "UserRole");
-                entity.HasKey(table => new
-                {
-                    table.UserID,
-                    table.RoleID
-                });
             });
         }
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Rookie.Ecom.Contracts.Dtos
 {
-    public class RatingDto
+    public class RatingDto:BaseDto
     {
         public Guid? UserID { get; set; }
         public UserDto User { get; set; }
