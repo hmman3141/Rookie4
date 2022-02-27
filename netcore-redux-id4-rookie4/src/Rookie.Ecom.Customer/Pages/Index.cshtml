@@ -5,30 +5,108 @@
     Layout = "./Shared/_Layout.cshtml";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <table>
+<div>
+    <div class="text-center">
+        <h1 class="display-4 m-xl-5">Welcome</h1>
+        
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <img src="~/img/B3.jpg" class="figure-img img-fluid rounded" style="width:100%; height:auto;" alt="Just a picture.">
+                <div style="height:300px" class="navbar justify-content-between">
+                    <span class="figure-caption ml-xl-5">We provide all products you can think about.</span>
+                </div>
+            </div>
+            <div class="col-sm text-center">
+                <div style="height:300px" class="navbar justify-content-between">
+                    <span class="figure-caption ml-xl-5">After selling we provide the warranty of one year and any time you need our help.</span>
+                </div>
+                <img src="~/img/B4.jpg" class="figure-img img-fluid rounded" style="width:100%; height:auto;" alt="Just a picture.">
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-xl-5 border-top pt-xl-5">
+        <div class="row">
+            <div class="col-sm text-center">
+                <i class="fa-solid fa-chair fa-2xl" style="cursor:pointer;"></i>
+                <br />
+                <br />
+                <span class="h5" style="cursor:pointer;">Chair</span>
+            </div>
+            <div class="col-sm text-center">
+                <i class="fa-solid fa-couch fa-2xl" style="cursor:pointer;"></i>
+                <br />
+                <br />
+                <span class="h5" style="cursor:pointer;">Sofa</span>
+            </div>
+            <div class="col-sm text-center">
+                <i class="fa-solid fa-lightbulb fa-2xl" style="cursor:pointer;"></i>
+                <br />
+                <br />
+                <span class="h5" style="cursor:pointer;">Lighting</span>
+            </div>
+            <div class="col-sm text-center">
+                <i class="fa-solid fa-mug-saucer fa-2xl" style="cursor:pointer;"></i>
+                <br />
+                <br />
+                <span class="h5" style="cursor:pointer;">Drink</span>
+            </div>
+            <div class="col-sm text-center">
+                <i class="fa-solid fa-utensils fa-2xl" style="cursor:pointer;"></i>
+                <br />
+                <br />
+                <span class="h5" style="cursor:pointer;">Food</span>
+            </div>
+            <div class="col-sm text-center">
+                <i class="fa-solid fa-bed fa-2xl" style="cursor:pointer;"></i>
+                <br />
+                <br />
+                <span class="h5" style="cursor:pointer;">Bed</span>
+            </div>
+        </div>
+    </div>
+
+    @*<div class="ml-5">
+            <img src="~/img/B3.jpg" class="figure-img img-fluid rounded" style="width:50%; height:auto;" alt="Just a picture.">
+            <span class="figure-caption ml-xl-5">After selling we provide the warranty of one year and any time you need our help.</span>
+        </div>*@
+
+
+@*<table>
+    <tr>
+        <th>Name</th>
+        <th>Desc</th>
+        <th>ImageUrl</th>
+    </tr>
+    @foreach (var temp in Model.Categories)
+    {
+
         <tr>
-            <th>Name</th>
-            <th>Desc</th>
-            <th>ImageUrl</th>
+            <th class="">@temp.CategoryName</th>
+            <th class="">@temp.Desc</th>
+            <th class="">@temp.ImageUrl</th>
         </tr>
-        @foreach (var temp in Model.Categories)
-        {
-            <tr>
-                <th class="navbar-brand">@temp.CategoryName</th>
-                <th class="btn btn-primary">@temp.Desc</th>
-                <th class="$pink-200">@temp.ImageUrl</th>
-            </tr>
-        }
-        @foreach (var temp in Model.Products)
+        @foreach (var temp1 in Model.Products(temp.Id))
         {
             <tr>
                 <th>
-                    @temp.ProductName
+                    @temp1.ProductName
                 </th>
             </tr>
         }
-    </table>
+
+    }
+    @foreach (var temp in Model.Products)
+        {
+            <tr>
+                <th>
+                    @temp.CategoryId
+                </th>
+            </tr>
+        }
+</table>*@
+    <button class="fa-solid fa-magnifying-glass position-fixed btn-sm rounded-pill border-0 bg-warning" style="right: 50px; bottom: 80px; width: 2.3rem; height: 2.3rem; padding-top:6px;"></button>
 </div>

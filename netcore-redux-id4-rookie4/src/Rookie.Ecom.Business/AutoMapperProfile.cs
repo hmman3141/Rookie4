@@ -25,6 +25,10 @@ namespace Rookie.Ecom.Business
 
             CreateMap<UserDto,User>();
 
+            CreateMap<RoleDto, Role>();
+
+            CreateMap<UserRoleDto, UserRole>();
+
             CreateMap<UserAddressDto,UserAddress>();
 
             CreateMap<ProductPictureDto, ProductPicture>();
@@ -40,6 +44,8 @@ namespace Rookie.Ecom.Business
             CreateMap<Rating,RatingDto>();
             CreateMap<User,UserDto>();
             CreateMap<UserAddress,UserAddressDto>();
+            CreateMap<Role, RoleDto>();
+            CreateMap<UserRole, UserRoleDto>();
         }
     }
 }

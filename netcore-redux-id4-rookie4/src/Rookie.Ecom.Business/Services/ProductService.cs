@@ -67,6 +67,20 @@ namespace Rookie.Ecom.Business.Services
             return _mapper.Map<ProductDto>(product);
         }
 
+        public async Task<IEnumerable<ProductDto>> GetByCateID(Guid id)
+        {
+            var query = _baseRepository.Entities;
+
+            query = query.Where(x => x.CategoryId == id);
+
+            query = query.OrderBy(x => x.ProductName);
+
+            var assets = await query
+                .AsNoTracking().ToListAsync();
+
+            return _mapper.Map<List<ProductDto>>(assets);
+        }
+
         public async Task<PagedResponseModel<ProductDto>> PagedQueryAsync(string name, int page, int limit)
         {
             var query = _baseRepository.Entities;

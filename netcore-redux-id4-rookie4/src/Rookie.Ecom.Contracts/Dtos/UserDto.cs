@@ -12,12 +12,12 @@ namespace Rookie.Ecom.Contracts.Dtos
 
         public string LastName { get; set; }
 
-        public ICollection<OrderDto> Orders { get; set; }
+        /*public ICollection<OrderDto> Orders { get; set; }
 
         public ICollection<RatingDto> Ratings { get; set; }
 
         public ICollection<UserAddressDto> UserAddresses { get; set; }
 
-        public ICollection<UserRoleDto> UserRoles { get; set; }
+        public ICollection<UserRoleDto> UserRoles { get; set; }*/
     }
 }

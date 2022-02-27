@@ -10,6 +10,7 @@ namespace Rookie.Ecom.Contracts.Constants
         public const string OrderDetail = "api/orderdetail";
         public const string Rating = "api/rating";
         public const string Role = "api/role";
+        public const string UserRole = "api/userrole";
         public const string ProductPicture = "api/productpicture";
     }
 }

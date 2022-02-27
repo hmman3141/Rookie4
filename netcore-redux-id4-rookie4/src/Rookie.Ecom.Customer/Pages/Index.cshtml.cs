@@ -24,7 +24,11 @@ namespace Rookie.Ecom.Customer.Pages
         }
 
         public IEnumerable<CategoryDto> Categories => _categoryService.GetAllAsync().Result;
-        public IEnumerable<ProductDto> Products => _productService.GetAllAsync().Result;
+        public IEnumerable<ProductDto> Products(Guid id)
+        {
+
+            return _productService.GetByCateID(id).Result;
+        }
 
         public void OnGet()
         {

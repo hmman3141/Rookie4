@@ -9,9 +9,9 @@ namespace Rookie.Ecom.Contracts.Dtos
     public class UserRoleDto:BaseDto
     {
         public Guid? UserID { get; set; }
-        public UserDto User { get; set; }
+        /*public UserDto User { get; set; }*/
 
         public Guid? RoleID { get; set; }
-        public RoleDto Role { get; set; }
+        /*public RoleDto Role { get; set; }*/
     }
 }

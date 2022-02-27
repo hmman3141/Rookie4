@@ -9,6 +9,6 @@ namespace Rookie.Ecom.Contracts.Dtos
         public string Title { get; set; }
 
         public Guid? ProductId { get; set; }
-        public ProductDto Product { get; set; }
+        /*public ProductDto Product { get; set; }*/
     }
 }

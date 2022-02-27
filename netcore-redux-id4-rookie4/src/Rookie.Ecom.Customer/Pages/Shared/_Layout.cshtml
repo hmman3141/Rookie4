@@ -4,23 +4,26 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Rookie.Ecom.Customer</title>
+    <script src="https://kit.fontawesome.com/6231a55862.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-light bg-light">
+        <nav class="navbar navbar-light bg-white border-bottom mr-5 ml-5">
             <div class="container-fluid">
-                <div>
-                    <img />
-                    <span>a</span>
+                <div class="justify-content-center ml-2">
+                    <i class="fa-solid fa-user fa-xl"></i>
+                    <span class="border-right p-2 mr-4"></span>
+                    <span class="navbar-text">Login</span>
                 </div>
-                <div>
-                    <img />
-                    <span>a</span>
-                    <span class="border border-dark rounded-circle" style="width:30px;height:30px">10</span>
+                <div class="justify-content-center">
+                    <span class="border-right p-2 mr-5"></span>
+                    <i class="fa-solid fa-cart-shopping mr-1 fa-xl"></i>
+                    <span class="ml-1 mr-1 navbar-text">My cart</span>
+                    <button class="btn-sm rounded-pill border-0" style="width: 1.9rem; height:1.9rem;">10</button>
                 </div>
-                
+
             </div>
         </nav>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -39,12 +42,16 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
                     </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
                 </div>
             </div>
         </nav>
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" class="pb-3 position-relative">
             @RenderBody()
         </main>
     </div>

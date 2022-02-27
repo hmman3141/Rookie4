@@ -17,10 +17,10 @@ namespace Rookie.Ecom.Contracts.Dtos
 
         public Guid? CategoryId { get; set; }
 
-        public CategoryDto Category { get; set; }
+        /*public CategoryDto Category { get; set; }*/
 
-        public ICollection<ProductPictureDto> ProductPictures { get; set; }
+        /*public ICollection<ProductPictureDto> ProductPictures { get; set; }
 
-        public ICollection<RatingDto> Ratings { get; set; }
+        public ICollection<RatingDto> Ratings { get; set; }*/
     }
 }
