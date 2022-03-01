@@ -60,6 +60,30 @@ namespace Rookie.Ecom.Business.Services
             return _mapper.Map<ProductPictureDto>(productPicture);
         }
 
+        public async Task<ProductPictureDto> GetByProductIdAsync(Guid id)
+        {
+            var query = _baseRepository.Entities;
+            query = query.Where(x => x.ProductId == id);
+            query = query.OrderBy(x => x.ProductId);
+            var assets = await query
+                .AsNoTracking()
+                .FirstOrDefaultAsync(null);
+
+            return _mapper.Map<ProductPictureDto>(assets);
+        }
+
+        public async Task<IEnumerable<ProductPictureDto>> GetAllByProductIdAsync(Guid id)
+        {
+            var query = _baseRepository.Entities;
+            query = query.Where(x => x.ProductId == id);
+            query = query.OrderBy(x => x.ProductId);
+            var assets = await query
+                .AsNoTracking()
+                .ToListAsync();
+
+            return _mapper.Map<List<ProductPictureDto>>(assets);
+        }
+
         /* public async Task<ProductPictureDto> GetByNameAsync(string name)
         {
             var ProductPicture = await _baseRepository.GetByAsync(x => x.ProductPictureName == name);

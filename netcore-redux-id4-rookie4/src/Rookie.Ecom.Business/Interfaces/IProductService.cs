@@ -16,7 +16,7 @@ namespace Rookie.Ecom.Business.Interfaces
 
         Task<ProductDto> GetByIdAsync(Guid id);
 
-        Task<ProductDto> GetByNameAsync(string name);
+        Task<IEnumerable<ProductDto>> GetByNameAsync(string name);
 
         Task<IEnumerable<ProductDto>> GetByCateID(Guid id);
 

@@ -16,6 +16,10 @@ namespace Rookie.Ecom.Business.Interfaces
 
         Task<ProductPictureDto> GetByIdAsync(Guid id);
 
+        Task<ProductPictureDto> GetByProductIdAsync(Guid id);
+
+        Task<IEnumerable<ProductPictureDto>> GetAllByProductIdAsync(Guid id);
+
         // Task<ProductPictureDto> GetByNameAsync(string name);
 
         Task<ProductPictureDto> AddAsync(ProductPictureDto productPictureDto);

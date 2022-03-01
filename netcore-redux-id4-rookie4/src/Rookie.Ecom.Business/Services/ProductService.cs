@@ -61,10 +61,14 @@ namespace Rookie.Ecom.Business.Services
             return _mapper.Map<ProductDto>(product);
         }
 
-        public async Task<ProductDto> GetByNameAsync(string name)
+        public async Task<IEnumerable<ProductDto>> GetByNameAsync(string name)
         {
-            var product = await _baseRepository.GetByAsync(x => x.ProductName == name);
-            return _mapper.Map<ProductDto>(product);
+            var query = _baseRepository.Entities;
+            query = query.Where(x => x.ProductName == name || x.ProductName.Contains(name));
+            var assets = await query
+                .AsNoTracking()
+                .ToListAsync();
+            return _mapper.Map<List<ProductDto>>(assets);
         }
 
         public async Task<IEnumerable<ProductDto>> GetByCateID(Guid id)

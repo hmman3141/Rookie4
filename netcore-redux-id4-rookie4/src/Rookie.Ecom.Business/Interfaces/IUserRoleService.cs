@@ -20,6 +20,8 @@ namespace Rookie.Ecom.Business.Interfaces
 
         Task<UserRoleDto> AddAsync(UserRoleDto userRoleDto);
 
+        Task<IEnumerable<UserDto>> GetByRoleID(Guid id);
+
         Task DeleteAsync(Guid id);
 
         Task UpdateAsync(UserRoleDto userRoleDto);

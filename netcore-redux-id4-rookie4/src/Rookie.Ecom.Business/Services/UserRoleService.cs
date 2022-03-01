@@ -15,11 +15,13 @@ namespace Rookie.Ecom.Business.Services
     public class UserRoleService : IUserRoleService
     {
         private readonly IBaseRepository<UserRole> _baseRepository;
+        private readonly IBaseRepository<User> _baseRepository1;
         private readonly IMapper _mapper;
 
-        public UserRoleService(IBaseRepository<UserRole> baseRepository, IMapper mapper)
+        public UserRoleService(IBaseRepository<UserRole> baseRepository, IBaseRepository<User> baseRepository1 , IMapper mapper)
         {
             _baseRepository = baseRepository;
+            _baseRepository1 = baseRepository1;
             _mapper = mapper;
         }
 
@@ -58,6 +60,21 @@ namespace Rookie.Ecom.Business.Services
             // unique, distinct, no-duplicate
             var userRole = await _baseRepository.GetByIdAsync(id);
             return _mapper.Map<UserRoleDto>(userRole);
+        }
+
+        public async Task<IEnumerable<UserDto>> GetByRoleID(Guid id)
+        {
+            var query = _baseRepository1.Entities;
+            query = query.Join(_baseRepository.Entities,x=>x.Id,y=>y.UserID,(x,y)=>new { x, y})
+                         .Where(n => n.y.RoleID == id)
+                         .Select(a=>a.x);
+            query = query.OrderBy(x=>x.Id);
+
+            var assets = await query
+                .AsNoTracking()
+                .ToListAsync();
+
+            return _mapper.Map<List<UserDto>>(assets);
         }
 
         /* public async Task<UserRoleDto> GetByNameAsync(string name)
