@@ -8,26 +8,27 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body>
+<body style="background-color: #FFF5EE">
     <header>
-        <nav class="navbar navbar-light bg-white border-bottom mr-5 ml-5">
-            <div class="container-fluid">
-                <div class="justify-content-center ml-2">
-                    <i class="fa-solid fa-user fa-xl"></i>
-                    <span class="border-right p-2 mr-4"></span>
-                    <span class="navbar-text">Login</span>
-                </div>
-                <div class="justify-content-center">
-                    <span class="border-right p-2 mr-5"></span>
-                    <i class="fa-solid fa-cart-shopping mr-1 fa-xl"></i>
-                    <span class="ml-1 mr-1 navbar-text">My cart</span>
-                    <button class="btn-sm rounded-pill border-0" style="width: 1.9rem; height:1.9rem;">10</button>
-                </div>
+        @*<nav class="navbar navbar-light bg-white border-bottom mr-3 ml-5">
+                <div class="container-fluid">
+                    <div class="justify-content-center ml-2">
+                        <i class="fa-solid fa-user fa-xl"></i>
+                        <span class="border-right p-2 mr-4"></span>
+                        <a class="navbar-text text-decoration-none" asp-area="" asp-page="/Login">Login</a>
+                    </div>
+                    <div class="justify-content-center">
 
-            </div>
-        </nav>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
+                        <span class="border-right p-2 mr-3"></span>
+                        <i class="fa-solid fa-cart-shopping mr-1 fa-xl"></i>
+                        <a class="ml-1 mr-1 navbar-text text-decoration-none" asp-area="" asp-page="/MyCart">My cart</a>
+                        <button class="btn-sm rounded-pill border-0" style="width: 1.9rem; height:1.9rem;">10</button>
+                    </div>
+
+                </div>
+            </nav>*@
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow pl-5 mb-3">
+            <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">Rookie.Ecom.Customer</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -42,10 +43,19 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
                     </ul>
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <form class="form-inline my-2 my-lg-0" asp-page="/Product" onsubmit="return validateForm()" method="get" name="search">
+                        <input class="form-control mr-sm-2" type="text" name="product" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                     </form>
+                    <div class="justify-content-center ml-xl-5">
+                        <i class="fa-solid fa-user fa-xl mr-2"></i>
+                        @*<span class="border-right p-2 mr-4"></span>*@
+                        <a class="navbar-text text-decoration-none" asp-area="" asp-page="/Login">Login</a>
+                        <span class="border-right p-2 mr-3"></span>
+                        <i class="fa-solid fa-cart-shopping mr-1 fa-xl"></i>
+                        <a class="ml-1 mr-1 navbar-text text-decoration-none" asp-area="" asp-page="/MyCart">My cart</a>
+                        <button class="btn-sm rounded-pill border-0" style="width: 1.9rem; height:1.9rem; visibility:hidden;">10</button>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -55,8 +65,10 @@
             @RenderBody()
         </main>
     </div>
-
-    <footer class="border-top footer text-muted">
+    <button class="position-fixed btn-sm rounded-pill border-0 btn btn-warning" style="right: 50px; bottom: 80px; width: 2.3rem; height: 2.3rem; padding-top:6px;" onclick="onClickToTop()">
+        <i class="fa-solid fa-angle-up"></i>
+    </button>
+    <footer class="border-top footer text-muted bg-white">
         <div class="container">
             &copy; 2022 - Rookie.Ecom.Customer - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
@@ -65,7 +77,24 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
+    <script>
+        function onClickToTop() {
+            document.body.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+            document.documentElement.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+        function validateForm() {
+            let x = document.forms["search"]["product"].value;
+            if (x == "") {
+                return false;
+            }
+        }
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

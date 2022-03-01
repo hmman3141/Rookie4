@@ -13,21 +13,21 @@ namespace Rookie.Ecom.Customer.Pages
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
-        private readonly ICategoryService _categoryService;
-        private readonly IProductService _productService;
+        private readonly IRoleService _roleService;
+        private readonly IUserRoleService _userRoleService;
 
-        public IndexModel(ILogger<IndexModel> logger, ICategoryService categoryService, IProductService productService)
+        public IndexModel(ILogger<IndexModel> logger, IRoleService roleService, IUserRoleService userRoleService)
         {
             _logger = logger;
-            _categoryService = categoryService;
-            _productService = productService;
+            _roleService = roleService;
+            _userRoleService = userRoleService;
         }
 
-        public IEnumerable<CategoryDto> Categories => _categoryService.GetAllAsync().Result;
-        public IEnumerable<ProductDto> Products(Guid id)
+        public IEnumerable<RoleDto> Roles => _roleService.GetAllAsync().Result;
+        public IEnumerable<UserDto> Users(Guid id)
         {
 
-            return _productService.GetByCateID(id).Result;
+            return _userRoleService.GetByRoleID(id).Result;
         }
 
         public void OnGet()
