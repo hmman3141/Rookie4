@@ -23,13 +23,13 @@ namespace Rookie.Ecom.Admin.Validators
                .WithMessage(string.Format(ErrorTypes.Common.MaxLengthError, ValidationRules.CommonRules.MaxLenghCharactersForText))
                .When(m => !string.IsNullOrWhiteSpace(m.ProductName));
 
-            RuleFor(x => x).MustAsync(
+            /*RuleFor(x => x).MustAsync(
              async (dto, cancellation) =>
              {
                  var exit = await ProductService.GetByNameAsync(dto.ProductName);
                  return exit == null || exit.Id != dto.Id;
              }
-          ).WithMessage("Duplicate record");
+          ).WithMessage("Duplicate record");*/
         }
     }
 }
