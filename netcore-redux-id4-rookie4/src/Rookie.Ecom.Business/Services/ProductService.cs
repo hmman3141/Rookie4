@@ -71,11 +71,33 @@ namespace Rookie.Ecom.Business.Services
             return _mapper.Map<List<ProductDto>>(assets);
         }
 
-        public async Task<IEnumerable<ProductDto>> GetByCateID(Guid id)
+        public async Task<IEnumerable<ProductDto>> GetByCateID(Guid id, int minvalue, int maxvalue)
         {
             var query = _baseRepository.Entities;
+            query = query.Where(x => x.CategoryId == id && x.Price >= minvalue);
 
-            query = query.Where(x => x.CategoryId == id);
+            if (maxvalue != 0)
+            {
+                query = query.Where(x => x.Price <= maxvalue);
+            }
+
+            query = query.OrderBy(x => x.ProductName);
+
+            var assets = await query
+                .AsNoTracking().ToListAsync();
+
+            return _mapper.Map<List<ProductDto>>(assets);
+        }
+
+        public async Task<IEnumerable<ProductDto>> GetByRange(int minvalue, int maxvalue)
+        {
+            var query = _baseRepository.Entities;
+            query = query.Where(x => x.Price >= minvalue);
+
+            if (maxvalue != 0)
+            {
+                query = query.Where(x => x.Price <= maxvalue);
+            }
 
             query = query.OrderBy(x => x.ProductName);
 
