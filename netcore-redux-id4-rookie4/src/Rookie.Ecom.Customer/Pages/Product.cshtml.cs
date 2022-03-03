@@ -30,9 +30,32 @@ namespace Rookie.Ecom.Customer.Pages
         public IEnumerable<ProductDto> products;
         public IEnumerable<CategoryDto> categories => _categoryService.GetAllAsync().Result;
         public ProductPictureDto productPicture(Guid id) => _productPictureService.GetAllByProductIdAsync(id).Result.FirstOrDefault();
-        public void OnGet(String product)
+        public void OnGet(String product, String category, int minvalue, int maxvalue)
         {
             products = _productService.GetByNameAsync(product).Result;
+
+            if (!String.IsNullOrEmpty(product))
+                products = _productService.GetByNameAsync(product).Result;
+            else
+            {
+                minvalue = Math.Abs(minvalue);
+                maxvalue = Math.Abs(maxvalue);
+                if (minvalue > maxvalue && maxvalue != 0)
+                {
+                    var temp = maxvalue;
+                    maxvalue = minvalue;
+                    minvalue = temp;
+                }
+
+                if (category != null)
+                {
+                    products = _productService.GetByCateID(_categoryService.GetByNameAsync(category).Result.Id, minvalue, maxvalue).Result;
+                }
+                else
+                {
+                    products = _productService.GetByRange(minvalue, maxvalue).Result;
+                }
+            }
         }
     }
 }
