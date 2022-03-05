@@ -32,10 +32,10 @@ namespace Rookie.Ecom.Customer.Pages
         public ProductPictureDto productPicture(Guid id) => _productPictureService.GetAllByProductIdAsync(id).Result.FirstOrDefault();
         public void OnGet(String product, String category, int minvalue, int maxvalue)
         {
-            products = _productService.GetByNameAsync(product).Result;
+            products = _productService.GetAllByAsync(x => x.ProductName == product || x.ProductName.Contains(product)).Result;
 
             if (!String.IsNullOrEmpty(product))
-                products = _productService.GetByNameAsync(product).Result;
+                products = _productService.GetAllByAsync(x => x.ProductName == product || x.ProductName.Contains(product)).Result;
             else
             {
                 minvalue = Math.Abs(minvalue);
