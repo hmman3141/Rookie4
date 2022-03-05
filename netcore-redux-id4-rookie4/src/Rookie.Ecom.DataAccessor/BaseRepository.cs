@@ -54,6 +54,12 @@ namespace Rookie.Ecom.DataAccessor
             return await query.FirstOrDefaultAsync(filter);
         }
 
+        public async Task<IEnumerable<T>> GetAllByAsync(Expression<Func<T, bool>> filter = null)
+        {
+            IQueryable<T> query = _dbContext.Set<T>();
+            return await query.Where(filter).ToListAsync();
+        }
+
         public async Task<T> GetByIdAsync(object id)
         {
             return await _dbContext.Set<T>()
