@@ -8,6 +8,7 @@ using Rookie.Ecom.DataAccessor.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -61,14 +62,10 @@ namespace Rookie.Ecom.Business.Services
             return _mapper.Map<ProductDto>(product);
         }
 
-        public async Task<IEnumerable<ProductDto>> GetByNameAsync(string name)
+        public async Task<IEnumerable<ProductDto>> GetAllByAsync(Expression<Func<Product,bool>> filter)
         {
-            var query = _baseRepository.Entities;
-            query = query.Where(x => x.ProductName == name || x.ProductName.Contains(name));
-            var assets = await query
-                .AsNoTracking()
-                .ToListAsync();
-            return _mapper.Map<List<ProductDto>>(assets);
+            var product = await _baseRepository.GetAllByAsync(filter);
+            return _mapper.Map<List<ProductDto>>(product);
         }
 
         public async Task<IEnumerable<ProductDto>> GetByCateID(Guid id, int minvalue, int maxvalue)

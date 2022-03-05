@@ -1,8 +1,10 @@
 ﻿using Rookie.Ecom.Contracts;
 using Rookie.Ecom.Contracts.Dtos;
+using Rookie.Ecom.DataAccessor.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,7 +18,7 @@ namespace Rookie.Ecom.Business.Interfaces
 
         Task<ProductDto> GetByIdAsync(Guid id);
 
-        Task<IEnumerable<ProductDto>> GetByNameAsync(string name);
+        Task<IEnumerable<ProductDto>> GetAllByAsync(Expression<Func<Product, bool>> filter);
 
         Task<IEnumerable<ProductDto>> GetByCateID(Guid id, int minvalue, int maxvalue);
 
