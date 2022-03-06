@@ -18,7 +18,7 @@ namespace Rookie.Ecom.Business.Interfaces
 
         Task<ProductDto> GetByIdAsync(Guid id);
 
-        Task<IEnumerable<ProductDto>> GetAllByAsync(Expression<Func<Product, bool>> filter);
+        Task<IEnumerable<ProductDto>> GetAllByAsync(Expression<Func<Product, bool>> filter, string includeProperties = "");
 
         Task<IEnumerable<ProductDto>> GetByCateID(Guid id, int minvalue, int maxvalue);
 
