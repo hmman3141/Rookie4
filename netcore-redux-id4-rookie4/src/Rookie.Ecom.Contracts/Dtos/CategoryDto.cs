@@ -11,6 +11,6 @@ namespace Rookie.Ecom.Contracts.Dtos
 
         public string ImageUrl { get; set; }
 
-        /*public ICollection<ProductDto> Products { get; set; }*/
+        public ICollection<ProductDto> Products { get; set; }
     }
 }

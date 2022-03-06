@@ -14,11 +14,11 @@ namespace Rookie.Ecom.Contracts.Dtos
 
         public Guid? UserID { get; set; }
 
-        /*public UserDto User { get; set; }*/
+        public UserDto User { get; set; }
 
         public Status Status { get; set; }
 
-        /*public ICollection<OrderDetailDto> OrderDetails { get; set; }*/
+        public ICollection<OrderDetailDto> OrderDetails { get; set; }
     }
     public enum Status { Processing, Preparing, Delivering, Delivered, Cancel }
 }
