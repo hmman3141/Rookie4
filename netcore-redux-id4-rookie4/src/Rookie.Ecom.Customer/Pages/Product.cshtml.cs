@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Rookie.Ecom.Business.Interfaces;
+using Rookie.Ecom.Contracts;
 using Rookie.Ecom.Contracts.Dtos;
 
 namespace Rookie.Ecom.Customer.Pages
@@ -26,16 +27,22 @@ namespace Rookie.Ecom.Customer.Pages
         }
 
 
-        public string temp;
-        public IEnumerable<ProductDto> products;
+        public string productName = "";
+        public string categoryName = "";
+        public int limitPage;
+        public int currentPage;
+        public PagedResponseModel<ProductDto> products;
         public IEnumerable<CategoryDto> categories => _categoryService.GetAllAsync().Result;
-        public ProductPictureDto productPicture(Guid id) => _productPictureService.GetAllByProductIdAsync(id).Result.FirstOrDefault();
-        public void OnGet(String product, String category, int minvalue, int maxvalue)
+        
+        public void OnGet(String product, String category, int minvalue, int maxvalue, int limit = 9, int curpage = 1)
         {
-            products = _productService.GetAllByAsync(x => x.ProductName == product || x.ProductName.Contains(product)).Result;
+            productName = product;
+            categoryName = category;
+            limitPage = limit;
+            currentPage = curpage;
 
             if (!String.IsNullOrEmpty(product))
-                products = _productService.GetAllByAsync(x => x.ProductName == product || x.ProductName.Contains(product)).Result;
+                products = _productService.PagedQueryAsync(x => x.ProductName == product || x.ProductName.Contains(product), curpage, limit, "ProductPictures").Result;
             else
             {
                 minvalue = Math.Abs(minvalue);
@@ -49,11 +56,15 @@ namespace Rookie.Ecom.Customer.Pages
 
                 if (category != null)
                 {
-                    products = _productService.GetByCateID(_categoryService.GetByNameAsync(category).Result.Id, minvalue, maxvalue).Result;
+                    products = _productService.PagedQueryAsync(x=>x.Category.CategoryName == category && x.Price >= minvalue && x.Price <= maxvalue
+                    , curpage, limit
+                    , "Category,ProductPictures").Result;
                 }
                 else
                 {
-                    products = _productService.GetByRange(minvalue, maxvalue).Result;
+                    products = _productService.PagedQueryAsync(x => x.Price >= minvalue && x.Price <= maxvalue
+                    , curpage, limit
+                    , "Category,ProductPictures").Result;
                 }
             }
         }

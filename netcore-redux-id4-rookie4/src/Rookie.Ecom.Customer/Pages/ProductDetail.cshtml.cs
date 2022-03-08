@@ -11,19 +11,26 @@ namespace Rookie.Ecom.Customer.Pages
 {
     public class ProductDetailModel : PageModel
     {
-        public String name = "";
-        private readonly ICategoryService categoryService;
-        public ProductDetailModel(ICategoryService _categoryService)
+        private readonly IProductService productService;
+        private readonly IRatingService ratingService;
+        public ProductDetailModel(IProductService _productService, IRatingService _ratingService)
         {
-            categoryService = _categoryService;
+            productService = _productService;
+            ratingService = _ratingService;
         }
 
-        public IEnumerable<CategoryDto> categoryDtos;
+        public ProductDto productDtos;
+        public double rating =0;
 
-        public void OnGet(String product)
+        public void OnGet(Guid product)
         {
-            name = product;
-            categoryDtos = categoryService.GetAllByAsync(x => 1 == 1).Result;
+            productDtos = productService.GetByAsync(x => x.Id == product,"ProductPictures").Result;
+            var ratingCount = ratingService.GetAllByAsync(x => x.ProductID == product, "Product").Result.Count();
+            if(ratingCount != 0)
+            {
+                rating = ratingService.GetAllByAsync(x => x.ProductID == product, "Product").Result.Average(x => x.Rate);
+            }
+            /*rating = ratingService.GetAllByAsync(x => x.ProductID == product,"Product").Result.Average(x => x.Rate);*/
         }
     }
 }

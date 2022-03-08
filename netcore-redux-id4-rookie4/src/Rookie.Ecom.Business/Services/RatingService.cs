@@ -8,6 +8,7 @@ using Rookie.Ecom.DataAccessor.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Rookie.Ecom.Business.Services
@@ -44,6 +45,12 @@ namespace Rookie.Ecom.Business.Services
         public async Task<IEnumerable<RatingDto>> GetAllAsync()
         {
             var ratings = await _baseRepository.GetAllAsync();
+            return _mapper.Map<List<RatingDto>>(ratings);
+        }
+
+        public async Task<IEnumerable<RatingDto>> GetAllByAsync(Expression<Func<Rating,bool>> filter, string includeProperties = "")
+        {
+            var ratings = await _baseRepository.GetAllByAsync(filter, includeProperties);
             return _mapper.Map<List<RatingDto>>(ratings);
         }
 

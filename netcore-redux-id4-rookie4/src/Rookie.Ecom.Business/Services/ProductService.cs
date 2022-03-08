@@ -68,47 +68,27 @@ namespace Rookie.Ecom.Business.Services
             return _mapper.Map<List<ProductDto>>(product);
         }
 
-        public async Task<IEnumerable<ProductDto>> GetByCateID(Guid id, int minvalue, int maxvalue)
+        public async Task<ProductDto> GetByAsync(Expression<Func<Product, bool>> filter, string includeProperties = "")
         {
-            var query = _baseRepository.Entities;
-            query = query.Where(x => x.CategoryId == id && x.Price >= minvalue);
-
-            if (maxvalue != 0)
-            {
-                query = query.Where(x => x.Price <= maxvalue);
-            }
-
-            query = query.OrderBy(x => x.ProductName);
-
-            var assets = await query
-                .AsNoTracking().ToListAsync();
-
-            return _mapper.Map<List<ProductDto>>(assets);
+            var product = await _baseRepository.GetByAsync(filter, includeProperties);
+            return _mapper.Map<ProductDto>(product);
         }
 
-        public async Task<IEnumerable<ProductDto>> GetByRange(int minvalue, int maxvalue)
+        public async Task<PagedResponseModel<ProductDto>> PagedQueryAsync(Expression<Func<Product,bool>> filter, int page, int limit, string includeProperties = "")
         {
-            var query = _baseRepository.Entities;
-            query = query.Where(x => x.Price >= minvalue);
 
-            if (maxvalue != 0)
+            var query = _baseRepository.Entities;
+
+            if (includeProperties != null)
             {
-                query = query.Where(x => x.Price <= maxvalue);
+                foreach (var includeProperty in includeProperties.Split
+                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProperty);
+                }
             }
 
-            query = query.OrderBy(x => x.ProductName);
-
-            var assets = await query
-                .AsNoTracking().ToListAsync();
-
-            return _mapper.Map<List<ProductDto>>(assets);
-        }
-
-        public async Task<PagedResponseModel<ProductDto>> PagedQueryAsync(string name, int page, int limit)
-        {
-            var query = _baseRepository.Entities;
-
-            query = query.Where(x => string.IsNullOrEmpty(name) || x.ProductName.Contains(name));
+            query = query.Where(filter);
 
             query = query.OrderBy(x => x.ProductName);
 

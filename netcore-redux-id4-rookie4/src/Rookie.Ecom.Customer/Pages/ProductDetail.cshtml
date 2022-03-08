@@ -4,36 +4,47 @@
     ViewData["Title"] = "Product detail page";
 }
 
-<div class="container">
+<div class="container mb-4">
     <div class="row">
         <div class="col-sm-8 border bg-white box-shadow rounded p-3 mt-4">
             <div class="container mb-3">
                 <div class="row">
                     <div class="col-sm border bg-white rounded shadow-sm">
-                        Product's picture
+                        <img src="@("/img/" + Model.productDtos.ProductPictures.FirstOrDefault().PictureUrl)" class="w-100"/>
                     </div>
-                    <div class="col-sm">
+                    <div class="col-sm navbar justify-content-center align-content-center">
                         <div>
-                            <i class="fa-solid fa-star"></i>
-                            <span style="font-size:14px">Score</span>
-                        </div>
-                        <div class="mb-2">
-                            <span class="h4 mr-2">Product name</span>
-                            <i class="fa-regular fa-heart"></i>
-                        </div>
-                        <span class="text-primary">$ Price</span>
-                        <div class="mt-2 mb-3">
-                            <span>Tag</span>
-                            <span>Tag</span>
-                        </div>
-                        <div class="nav">
-                            <button class="btn btn-dark">Add to cart</button>
-                            <div class="bg-dark rounded ml-2 navbar p-0">
-                                <button class="btn btn-dark" onclick="onChangeQuantity('0')">-</button>
-                                <span class="mr-2 ml-2 text-white" id="quantity">1</span>
-                                <button class="btn btn-dark" onclick="onChangeQuantity('1')">+</button>
+                            <div>
+                                <i class="fa-solid fa-star"></i>
+                                @if (Model.rating == 0)
+                                {
+                                    <span style="font-size:14px">Not rating yet</span>
+                                }
+                                else
+                                {
+                                    <span style="font-size:14px">@Model.rating</span>
+                                }
+
+                            </div>
+                            <div class="mb-2">
+                                <span class="h4 mr-2">@Model.productDtos.ProductName</span>
+                                <i class="fa-regular fa-heart"></i>
+                            </div>
+                            <span class="text-primary">@("$" + Model.productDtos.Price)</span>
+                            <div class="mt-2 mb-3">
+                                <span>Tag</span>
+                                <span>Tag</span>
+                            </div>
+                            <div class="nav">
+                                <button class="btn btn-dark">Add to cart</button>
+                                <div class="bg-dark rounded ml-2 navbar p-0">
+                                    <button class="btn btn-dark" onclick="onChangeQuantity('0')">-</button>
+                                    <span class="mr-2 ml-2 text-white" id="quantity">1</span>
+                                    <button class="btn btn-dark" onclick="onChangeQuantity('1')">+</button>
+                                </div>
                             </div>
                         </div>
+                        
 
 
                     </div>
@@ -53,8 +64,11 @@
                     <a class="nav-link" href="#">Reviews</a>
                 </li>
             </ul>
-            <span>Desciption and reviews are here</span>
-        </div>
+            <div style="word-wrap:break-word;">
+                <span>@Model.productDtos.Desc</span>
+
+            </div>
+                    </div>
         <div class="col-sm ml-lg-5 p-3">
             <span class="h5">Similar products</span>
             <div class="border bg-white pt-2 pb-2 mt-3 shadow-sm">
@@ -104,11 +118,3 @@
         }
     }
 </script>
-
-@foreach (var temp in Model.categoryDtos)
-            {
-                @foreach (var temp2 in temp.Products)
-                {
-                    <p>@temp2.Id</p>
-                }
-            }

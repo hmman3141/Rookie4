@@ -18,6 +18,8 @@ namespace Rookie.Ecom.Business.Interfaces
 
         Task<IEnumerable<CategoryDto>> GetAllByAsync(Expression<Func<Category, bool>> filter, string includeProperties = "");
 
+        Task<CategoryDto> GetByAsync(Expression<Func<Category, bool>> filter, string includeProperties = "");
+
         Task<CategoryDto> GetByNameAsync(string name);
 
         Task<CategoryDto> AddAsync(CategoryDto categoryDto);

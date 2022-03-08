@@ -27,7 +27,7 @@
 
                 </div>
             </nav>*@
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow pl-5 mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">Rookie.Ecom.Customer</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -39,6 +39,17 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
+                        @*<li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Dropdown
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </li>*@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
@@ -53,8 +64,8 @@
                         <a class="navbar-text text-decoration-none" asp-area="" asp-page="/Login">Login</a>
                         <span class="border-right p-2 mr-3"></span>
                         <i class="fa-solid fa-cart-shopping mr-1 fa-xl"></i>
-                        <a class="ml-1 mr-1 navbar-text text-decoration-none" asp-area="" asp-page="/MyCart">My cart</a>
-                        <button class="btn-sm rounded-pill border-0" style="width: 1.9rem; height:1.9rem; visibility:hidden;">10</button>
+                        <a class="ml-1 mr-1 navbar-text text-decoration-none" asp-area="" asp-page="/Cart">My cart</a>
+                        <button class="btn-sm rounded-pill border-0" style="width: 1.9rem; height:1.9rem;" hidden>10</button>
                     </div>
                 </div>
             </div>

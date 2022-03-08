@@ -21,7 +21,14 @@
                 @foreach (var category in Model.categories)
                 {
                     <div class="form-check pl-5 pb-2 nav">
-                        <input class="form-check-input align-self-center mb-0" type="radio" id="@(category.CategoryName)" name="category" value="@(category.CategoryName)">
+                        @if (Model.categoryName == category.CategoryName)
+                        {
+                            <input class="form-check-input align-self-center mb-0" checked type="radio" id="@(category.CategoryName)" name="category" value="@(category.CategoryName)">
+                        }
+                        else
+                        {
+                            <input class="form-check-input align-self-center mb-0" type="radio" id="@(category.CategoryName)" name="category" value="@(category.CategoryName)">
+                        }
                         <label class="form-check-label align-self-center" for="@(category.CategoryName)">
                             @category.CategoryName
                         </label>
@@ -60,7 +67,7 @@
         </form>
 
         <!--row 2-->
-        <div class="col-sm-9 text-center pl-5">
+        <form class="col-sm-9 text-center pl-5">
 
             <!--row 2.1-->
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow ml-3 mr-3 pl-1 mb-3 pt-0 pb-0">
@@ -82,10 +89,22 @@
                                 <span class="nav-link text-dark ml-3">Show</span>
                             </li>
                             <li class="nav-item">
-                                <select class="custom-select ml-2" id="inputGroupSelect03">
-                                    <option selected>9</option>
-                                    <option value="16">16</option>
-                                    <option value="24">24</option>
+                                <select class="custom-select ml-2" id="inputGroupSelect03" onchange="onLimitClick()" name="limit">
+                                    @{ int[] options = { 9, 12, 16 };}
+                                    @foreach (var option in options)
+                                    {
+                                        if (option == Model.limitPage)
+                                        {
+                                            <option selected value="@option">@option</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@option">@option</option>
+                                        }
+
+
+                                    }
+
                                 </select>
                             </li>
                         </ul>
@@ -107,7 +126,7 @@
                     var count = 0;
                 }
                 <div class="row">
-                    @foreach (var product in Model.products)
+                    @foreach (var product in Model.products.Items)
                     {
                         if (count == 3)
                         {
@@ -120,15 +139,15 @@
                         }
                         <div class="col-sm mb-3">
                             <div class="border">
-                                <div class="text-center bg-white pt-2 pb-3 pl-2 pr-2" style="cursor:pointer" onclick="onProductClick('@(product.ProductName)')" asp-page="/ProductDetail?product=@(product.Id)">
+                                <div class="text-center bg-white pt-2 pb-3 pl-2 pr-2" style="cursor:pointer" onclick="onProductClick('@(product.Id)')" asp-page="/ProductDetail?product=@(product.Id)">
                                     <div>
-                                        <img src="~/img/test.jpg" class="rounded" alt="..." style="width: 200px; height: 200px; object-fit: contain;">
+                                        <img src="@("/img/" + product.ProductPictures.FirstOrDefault().PictureUrl)" class="rounded" alt="..." style="width: 200px; height: 200px; object-fit: contain;">
                                     </div>
                                     <div class="mt-3 mb-1">
                                         <span class="h5">@product.ProductName</span>
                                     </div>
                                     <div class="mb-1">
-                                        <span class="h6" id="abc">Price</span>
+                                        <span class="h6" id="abc">$@product.Price</span>
                                     </div>
                                     <div>
                                         <span>Star</span>
@@ -154,30 +173,51 @@
 
             <nav class="nav justify-content-center mt-2">
                 <ul class="pagination">
-                    <li class="page-item"><a class="page-link text-dark" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link text-dark" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link text-dark" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link text-dark" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link text-dark" href="#">Next</a></li>
+                    @{
+                        var pagination = Model.products.Items.Any();
+                    }
+                    @if (pagination)
+                    {
+                        <li class="page-item"><a class="page-link text-dark" href="#">Previous</a></li>
+                        for (int num = (Model.products.CurrentPage != 1) ? Model.products.CurrentPage - 1 : 1; num <= Model.products.TotalPages; num++)
+                        {
+                            if (Model.currentPage == num)
+                            {
+                                <li class="page-item"><button class="page-link text-dark btn-light active" id="btn-click" type="submit" name="curpage" value="@num">@num</button></li>
+                            }
+                            else
+                            {
+                                <li class="page-item"><button class="page-link text-dark" type="submit" name="curpage" value="@num">@num</button></li>
+                            }
+                            if (Model.currentPage - num == 3)
+                            {
+                                break;
+                            }
+                        }
+                        <li class="page-item"><a class="page-link text-dark" href="#">Next</a></li>
+                    }
                 </ul>
-            </nav>
 
+                <input type="text" value="@Model.productName" name="product" hidden />
+                <input type="text" value="@Model.categoryName" name="category" hidden />
+            </nav>
+            @if (!pagination)
+            {
+        <div class="text-center mt-5">
+            <span class="text-black-50">Sorry but nothing is here</span>
         </div>
+                
+            }
+        </form>
     </div>
 </div>
 <script>
-    function onMouseOverProduct(id) {
-        document.getElementById(id).className += " border-danger";
+    function onLimitClick() {
+        document.getElementById("btn-click").click();
     }
 
-    function onMouveLeaveProduct(id) {
-        var str = document.getElementById(id).className;
-        str = str.Substring(0, str.LastIndexOf(' ')).TrimEnd();
-        document.getElementById(id).className = str;
-    }
-
-    function onProductClick(productName) {
-        location.href = "/ProductDetail?product=" + productName;
+    function onProductClick(productId) {
+        location.href = "/ProductDetail?product=" + productId;
     }
 </script>
 @*@foreach (var temp in Model.products)

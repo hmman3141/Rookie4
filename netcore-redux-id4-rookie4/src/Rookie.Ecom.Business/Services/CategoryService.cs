@@ -48,6 +48,12 @@ namespace Rookie.Ecom.Business.Services
             return _mapper.Map<List<CategoryDto>>(categories);
         }
 
+        public async Task<CategoryDto> GetByAsync(Expression<Func<Category, bool>> filter, string includeProperties = "")
+        {
+            var categories = await _baseRepository.GetByAsync(filter, includeProperties);
+            return _mapper.Map<CategoryDto>(categories);
+        }
+
         public async Task<IEnumerable<CategoryDto>> GetAllByAsync(Expression<Func<Category, bool>> filter, string includeProperties = "")
         {
             var categories = await _baseRepository.GetAllByAsync(filter, includeProperties);
