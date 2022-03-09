@@ -4,14 +4,14 @@
     ViewData["Title"] = "Product page";
 }
 
-<img src="~/img/productTop.jpg" class="mb-2" style="width:100%;height:auto;" alt="Image at the top of product page"/>
+<img src="~/img/productTop.jpg" class="mb-2 mt-3" style="width:100%;height:auto;" alt="Image at the top of product page"/>
 
 <div class="container mt-xl-4">
     <div class="row">
 
         <!--row 1-->
         <form class="col-sm p-0">
-            <div class="border bg-white">
+            <div class="border bg-white shadow-sm">
                 <div class="bg-dark pl-3 pt-2 pb-2">
                     <span class="h5 text-white">SHOP BY</span>
                 </div>
@@ -70,7 +70,7 @@
         <form class="col-sm-9 text-center pl-5">
 
             <!--row 2.1-->
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow ml-3 mr-3 pl-1 mb-3 pt-0 pb-0">
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white box-shadow ml-3 mr-3 pl-1 mb-3 pt-0 pb-0">
                 <div class="container-fluid">
                     <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                         <ul class="navbar-nav flex-grow-1">
@@ -78,7 +78,7 @@
                                 <span class="nav-link text-dark">Sort by</span>
                             </li>
                             <li class="nav-item">
-                                <select class="custom-select ml-2" id="inputGroupSelect03">
+                                <select class="custom-select ml-2 border-0 shadow-sm" id="inputGroupSelect03">
                                     <option selected>Choose...</option>
                                     <option value="1">One</option>
                                     <option value="2">Two</option>
@@ -89,7 +89,7 @@
                                 <span class="nav-link text-dark ml-3">Show</span>
                             </li>
                             <li class="nav-item">
-                                <select class="custom-select ml-2" id="inputGroupSelect03" onchange="onLimitClick()" name="limit">
+                                <select class="custom-select ml-2 border-0 shadow-sm" id="inputGroupSelect03" onchange="onLimitClick()" name="limit">
                                     @{ int[] options = { 9, 12, 16 };}
                                     @foreach (var option in options)
                                     {
@@ -131,14 +131,14 @@
                         if (count == 3)
                         {
                             <div class="w-100 mt-2"></div>
-                            count = 0;
+                            count = 1;
                         }
                         else
                         {
                             count = count + 1;
                         }
                         <div class="col-sm mb-3">
-                            <div class="border">
+                            <div class="shadow-sm">
                                 <div class="text-center bg-white pt-2 pb-3 pl-2 pr-2" style="cursor:pointer" onclick="onProductClick('@(product.Id)')" asp-page="/ProductDetail?product=@(product.Id)">
                                     <div>
                                         <img src="@("/img/" + product.ProductPictures.FirstOrDefault().PictureUrl)" class="rounded" alt="..." style="width: 200px; height: 200px; object-fit: contain;">
@@ -164,7 +164,7 @@
                             </div>
                         </div>
                     }
-                    @for (var i = 0; i < 2; i++)
+                    @for (var i = count; i < 3; i++)
                     {
                         <div class="col-sm"></div>
                     }
@@ -220,9 +220,4 @@
         location.href = "/ProductDetail?product=" + productId;
     }
 </script>
-@*@foreach (var temp in Model.products)
-{
-    <p>@temp.Id</p>
-    <p>@Model.productPicture(temp.Id).PictureUrl</p>
-}*@
 

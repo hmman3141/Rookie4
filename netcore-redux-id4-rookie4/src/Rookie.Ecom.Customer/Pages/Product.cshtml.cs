@@ -34,39 +34,26 @@ namespace Rookie.Ecom.Customer.Pages
         public PagedResponseModel<ProductDto> products;
         public IEnumerable<CategoryDto> categories => _categoryService.GetAllAsync().Result;
         
-        public void OnGet(String product, String category, int minvalue, int maxvalue, int limit = 9, int curpage = 1)
+        public void OnGet(String product, String category, int minvalue = 0, int maxvalue = 0, int limit = 9, int curpage = 1)
         {
             productName = product;
             categoryName = category;
             limitPage = limit;
             currentPage = curpage;
 
-            if (!String.IsNullOrEmpty(product))
-                products = _productService.PagedQueryAsync(x => x.ProductName == product || x.ProductName.Contains(product), curpage, limit, "ProductPictures").Result;
-            else
+            minvalue = Math.Abs(minvalue);
+            maxvalue = Math.Abs(maxvalue);
+            if (minvalue > maxvalue && maxvalue != 0)
             {
-                minvalue = Math.Abs(minvalue);
-                maxvalue = Math.Abs(maxvalue);
-                if (minvalue > maxvalue && maxvalue != 0)
-                {
-                    var temp = maxvalue;
-                    maxvalue = minvalue;
-                    minvalue = temp;
-                }
-
-                if (category != null)
-                {
-                    products = _productService.PagedQueryAsync(x=>x.Category.CategoryName == category && x.Price >= minvalue && x.Price <= maxvalue
-                    , curpage, limit
-                    , "Category,ProductPictures").Result;
-                }
-                else
-                {
-                    products = _productService.PagedQueryAsync(x => x.Price >= minvalue && x.Price <= maxvalue
-                    , curpage, limit
-                    , "Category,ProductPictures").Result;
-                }
+                var temp = maxvalue;
+                maxvalue = minvalue;
+                minvalue = temp;
             }
+
+
+                products = _productService.PagedQueryAsync(x => String.IsNullOrEmpty(product) ? true : (x.ProductName == product || x.ProductName.Contains(product)) && (category==null)?true:(x.Category.CategoryName == category) && x.Price >= minvalue && (maxvalue == 0) ? true : x.Price <= maxvalue,
+                    curpage, limit, "Category,ProductPictures").Result;
+            
         }
     }
 }

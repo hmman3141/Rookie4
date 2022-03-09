@@ -4,37 +4,7 @@
     ViewData["Title"] = "Home page";
     Layout = "./Shared/_Layout.cshtml";
 }
-@*<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">Enable body scrolling</button>
-<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBackdrop" aria-controls="offcanvasWithBackdrop">Enable backdrop (default)</button>
-<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Enable both scrolling & backdrop</button>
 
-<div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Colored with scrolling</h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-        <p>Try scrolling the rest of the page to see this option in action.</p>
-    </div>
-</div>
-<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasWithBackdrop" aria-labelledby="offcanvasWithBackdropLabel">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasWithBackdropLabel">Offcanvas with backdrop</h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-        <p>.....</p>
-    </div>
-</div>
-<div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Backdrop with scrolling</h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-        <p>Try scrolling the rest of the page to see this option in action.</p>
-    </div>
-</div>*@
 <div>
     <div class="text-center">
         <h1 class="display-4 m-xl-5">Welcome</h1>
@@ -42,7 +12,7 @@
 
     </div>
 
-    <div class="container">
+    <div class="container pb-5">
         <div class="row">
             <div class="col-sm-6">
                 <img src="~/img/B3.jpg" class="figure-img img-fluid rounded" style="width:100%; height:auto;" alt="Just a picture.">
@@ -59,74 +29,86 @@
         </div>
     </div>
 
-    <div class="container mt-xl-5 border-top pt-xl-5">
-        <div class="row">
-            <div class="col-sm text-center">
-                <i class="fa-solid fa-chair fa-2xl" style="cursor:pointer;"></i>
-                <br />
-                <br />
-                <span class="h5" style="cursor:pointer;">Chair</span>
-            </div>
-            <div class="col-sm text-center">
-                <i class="fa-solid fa-couch fa-2xl" style="cursor:pointer;"></i>
-                <br />
-                <br />
-                <span class="h5" style="cursor:pointer;">Sofa</span>
-            </div>
-            <div class="col-sm text-center">
-                <i class="fa-solid fa-lightbulb fa-2xl" style="cursor:pointer;"></i>
-                <br />
-                <br />
-                <span class="h5" style="cursor:pointer;">Lighting</span>
-            </div>
-            <div class="col-sm text-center">
-                <i class="fa-solid fa-mug-saucer fa-2xl" style="cursor:pointer;"></i>
-                <br />
-                <br />
-                <span class="h5" style="cursor:pointer;">Drink</span>
-            </div>
-            <div class="col-sm text-center">
-                <i class="fa-solid fa-utensils fa-2xl" style="cursor:pointer;"></i>
-                <br />
-                <br />
-                <span class="h5" style="cursor:pointer;">Food</span>
-            </div>
-            <div class="col-sm text-center">
-                <i class="fa-solid fa-bed fa-2xl" style="cursor:pointer;"></i>
-                <br />
-                <br />
-                <span class="h5" style="cursor:pointer;">Bed</span>
-            </div>
+    <div class="container text-center">
+        <span class="h3 text-black-50" style="font-weight:400;">Featured Products</span>
+        @{
+            var count = 0;
+        }
+        <div class="row mt-5">
+            @foreach (var product in Model.productDtos)
+            {
+                
+                count = count + 1;
+                
+                <div class="col-sm mb-3">
+                    <div class="border rounded bg-white shadow-sm">
+                        <div class="text-center pt-2 pb-3 pl-2 pr-2" style="cursor:pointer" onclick="onProductClick('@(product.Id)')" asp-page="/ProductDetail?product=@(product.Id)">
+                            <div>
+                                <img src="@("/img/" + product.ProductPictures.FirstOrDefault().PictureUrl)" class="rounded" alt="..." style="width: 150px; height: 150px; object-fit: contain;">
+                            </div>
+                            <div class="mt-3 mb-1">
+                                <span class="h5" style="font-weight:400;">@product.ProductName</span>
+                            </div>
+                            <div class="mb-1">
+                                <span class="h6" id="abc" style="font-weight:300">$@product.Price</span>
+                            </div>
+                        </div>
+                        @*<div class="input-group">
+                            <div class="nav justify-content-center align-content-center btn-info border-0" style="width:18.1%; cursor:pointer;">
+                                <i class="fa-solid fa-heart"></i>
+                            </div>
+                            <div class="nav justify-content-center align-content-center btn-warning border-0 pt-2 pb-2" style="width: 81.9%; cursor: pointer;">
+                                <span class="text-white">ADD TO CART</span>
+                            </div>
+                        </div>*@
+                    </div>
+                </div>
+            }
+            @for (var i = count; i < 5; i++)
+            {
+                <div class="col-sm"></div>
+            }
         </div>
     </div>
 
-    @*<div class="ml-5">
-            <img src="~/img/B3.jpg" class="figure-img img-fluid rounded" style="width:50%; height:auto;" alt="Just a picture.">
-            <span class="figure-caption ml-xl-5">After selling we provide the warranty of one year and any time you need our help.</span>
-        </div>*@
-
-
-    @*<table>
-            <tr>
-                <th>Name</th>
-                <th>Desc</th>
-                <th>ImageUrl</th>
-            </tr>
-            @foreach (var temp in Model.Roles)
+    <div class="container mt-xl-5 border-top pt-xl-5">
+        @{
+            count = 0;
+        }
+        <div class="row">
+            @foreach (var category in Model.categoryDtos)
             {
-
-                <tr>
-                    <th class="">Role name: @temp.RoleName</th>
-                </tr>
-                @foreach (var temp1 in Model.Users(temp.Id))
+                if (count == 7)
                 {
-                    <tr>
-                        <th>
-                            Last name: @temp1.LastName
-                        </th>
-                    </tr>
+                    <div class="w-100 mt-2"></div>
+                    count = 0;
                 }
-
+                else
+                {
+                    count = count + 1;
+                }
+                <div class="col-sm mb-3">
+                    <div class="text-center pt-2 pb-3 pl-2 pr-2" style="cursor:pointer" onclick="onCategoryClick('@(category.CategoryName)')" asp-page="/ProductDetail?category=@(category.CategoryName)">
+                        <i class="@("fa-solid " +  category.ImageUrl + " fa-2xl")" style="cursor:pointer;"></i>
+                        <br />
+                        <br />
+                        <span class="h5" style="cursor:pointer;">@category.CategoryName</span>
+                    </div>
+                </div>
             }
-        </table>*@
+            @for (var i = count; i < 7; i++)
+            {
+                <div class="col-sm"></div>
+            }
+        </div>
+    </div>
 </div>
+<script>
+    function onCategoryClick(categoryName) {
+        location.href = "/Product?category=" + categoryName;
+    }
+
+    function onProductClick(productId) {
+        location.href = "/ProductDetail?product=" + productId;
+    }
+</script>

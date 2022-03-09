@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body style="background-color: #FFF5EE">
+<body class="bg-white">
     <header>
         @*<nav class="navbar navbar-light bg-white border-bottom mr-3 ml-5">
                 <div class="container-fluid">
@@ -27,9 +27,9 @@
 
                 </div>
             </nav>*@
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">Rookie.Ecom.Customer</a>
+                <a class="navbar-brand text-white" asp-area="" asp-page="/Index">Rookie.Ecom.Customer</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -37,7 +37,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link text-white" asp-area="" asp-page="/Index">Home</a>
                         </li>
                         @*<li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -51,20 +51,34 @@
                             </div>
                         </li>*@
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                            <a class="nav-link text-white" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
                     </ul>
                     <form class="form-inline my-2 my-lg-0" asp-page="/Product" onsubmit="return validateForm()" method="get" name="search">
                         <input class="form-control mr-sm-2" type="text" name="product" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
                     </form>
                     <div class="justify-content-center ml-xl-5">
-                        <i class="fa-solid fa-user fa-xl mr-2"></i>
+                        <i class="fa-solid fa-user fa-xl mr-2 text-white"></i>
                         @*<span class="border-right p-2 mr-4"></span>*@
-                        <a class="navbar-text text-decoration-none" asp-area="" asp-page="/Login">Login</a>
+                        @if (User.Claims.Any())
+                        {
+                            @*<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @User.Claims.Where(x => x.Type == "given_name").FirstOrDefault().Value
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="#">Action</a>
+                            </div>*@
+                            <a class="navbar-text text-decoration-none text-white" asp-area="" asp-page="/Product">@User.Claims.Where(x => x.Type == "given_name").FirstOrDefault().Value</a>
+                        }
+                        else
+                        {
+                            <a class="navbar-text text-decoration-none text-white" asp-area="" asp-page="/Login">Login</a>
+                        }
+
                         <span class="border-right p-2 mr-3"></span>
-                        <i class="fa-solid fa-cart-shopping mr-1 fa-xl"></i>
-                        <a class="ml-1 mr-1 navbar-text text-decoration-none" asp-area="" asp-page="/Cart">My cart</a>
+                        <i class="fa-solid fa-cart-shopping mr-1 fa-xl text-white"></i>
+                        <a class="ml-1 mr-1 navbar-text text-decoration-none text-white" asp-area="" asp-page="/Cart">My cart</a>
                         <button class="btn-sm rounded-pill border-0" style="width: 1.9rem; height:1.9rem;" hidden>10</button>
                     </div>
                 </div>
@@ -79,8 +93,8 @@
     <button class="position-fixed btn-sm rounded-pill border-0 btn btn-warning" style="right: 50px; bottom: 80px; width: 2.3rem; height: 2.3rem; padding-top:6px;" onclick="onClickToTop()">
         <i class="fa-solid fa-angle-up"></i>
     </button>
-    <footer class="border-top footer text-muted bg-white">
-        <div class="container">
+    <footer class="border-top footer text-muted bg-dark">
+        <div class="container text-white">
             &copy; 2022 - Rookie.Ecom.Customer - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
     </footer>
