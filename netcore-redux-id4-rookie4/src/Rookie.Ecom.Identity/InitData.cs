@@ -18,13 +18,14 @@ namespace Rookie.Ecom.Identity
                     SubjectId = "35d08332-a3dc-4e5b-8a35-ffe522ab3d61",
                     Username = "User1",
                     Password = "u123",
-
+                    
                     Claims = new List<Claim>
                     {
                         new Claim("given_name", "Jhon"),
                         new Claim("family_name", "Doe"),
                         new Claim("role", "Admin")
                     }
+                    
                 },
                 new TestUser
                 {
@@ -64,11 +65,11 @@ namespace Rookie.Ecom.Identity
                     AllowedGrantTypes = GrantTypes.Implicit,
                     RedirectUris = new List<string>()
                     {
-                        "https://localhost:5001/callback"
+                        "https://localhost:5003/signin-oidc"
                     },
                     PostLogoutRedirectUris = new List<string>()
                     {
-                        "https://localhost:5001/"
+                        "https://localhost:5003/"
                     },
                     AllowedScopes =
                     {
@@ -80,10 +81,10 @@ namespace Rookie.Ecom.Identity
                     {
                         new Secret("rookieecomsecret".Sha256())
                     },
-                    //AllowedCorsOrigins = new List<string>
-                    //{
-                    //    "https://localhost:5001/"
-                    //},
+                    /*AllowedCorsOrigins = new List<string>
+                    {
+                        "https://localhost:5003/"
+                    },*/
                     AllowAccessTokensViaBrowser = true
                 },
                 new Client

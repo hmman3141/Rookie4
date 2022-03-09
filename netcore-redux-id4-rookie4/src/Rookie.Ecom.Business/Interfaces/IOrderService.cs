@@ -1,8 +1,10 @@
 ﻿using Rookie.Ecom.Contracts;
 using Rookie.Ecom.Contracts.Dtos;
+using Rookie.Ecom.DataAccessor.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,11 +14,9 @@ namespace Rookie.Ecom.Business.Interfaces
     {
         Task<IEnumerable<OrderDto>> GetAllAsync();
 
-        // Task<PagedResponseModel<OrderDto>> PagedQueryAsync(string name, int page, int limit);
-
         Task<OrderDto> GetByIdAsync(Guid id);
 
-        // Task<OrderDto> GetByNameAsync(string name);
+        Task<IEnumerable<OrderDto>> GetAllByAsync(Expression<Func<Order, bool>> filter, string includeProperties = "");
 
         Task<OrderDto> AddAsync(OrderDto orderDto);
 

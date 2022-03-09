@@ -56,6 +56,6 @@ namespace Rookie.Ecom.Admin.Controllers
         [HttpGet("find")]
         public async Task<PagedResponseModel<ProductDto>>
             FindAsync(string name, int page = 1, int limit = 10)
-            => await _productService.PagedQueryAsync(name, page, limit);
+            => await _productService.PagedQueryAsync(x => x.ProductName == name, page, limit);
     }
 }

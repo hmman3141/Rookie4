@@ -8,6 +8,7 @@ using Rookie.Ecom.DataAccessor.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Rookie.Ecom.Business.Services
@@ -47,6 +48,12 @@ namespace Rookie.Ecom.Business.Services
             return _mapper.Map<List<OrderDetailDto>>(orderDetails);
         }
 
+        public async Task<IEnumerable<OrderDetailDto>> GetAllByAsync(Expression<Func<OrderDetail, bool>> filter, string includeProperties = "")
+        {
+            var orders = await _baseRepository.GetAllByAsync(filter, includeProperties);
+            return _mapper.Map<List<OrderDetailDto>>(orders);
+        }
+
         public async Task<OrderDetailDto> GetByIdAsync(Guid id)
         {
             // map roles and users: collection (roleid, userid)
@@ -59,33 +66,6 @@ namespace Rookie.Ecom.Business.Services
             var orderDetail = await _baseRepository.GetByIdAsync(id);
             return _mapper.Map<OrderDetailDto>(orderDetail);
         }
-
-        /* public async Task<OrderDetailDto> GetByNameAsync(string name)
-        {
-            var OrderDetail = await _baseRepository.GetByAsync(x => x.OrderDetailName == name);
-            return _mapper.Map<OrderDetailDto>(OrderDetail);
-        }
-
-        public async Task<PagedResponseModel<OrderDetailDto>> PagedQueryAsync(string name, int page, int limit)
-        {
-            var query = _baseRepository.Entities;
-
-            query = query.Where(x => string.IsNullOrEmpty(name) || x.OrderDetailName.Contains(name));
-
-            query = query.OrderBy(x => x.OrderDetailName);
-
-            var assets = await query
-                .AsNoTracking()
-                .PaginateAsync(page, limit);
-
-            return new PagedResponseModel<OrderDetailDto>
-            {
-                CurrentPage = assets.CurrentPage,
-                TotalPages = assets.TotalPages,
-                TotalItems = assets.TotalItems,
-                Items = _mapper.Map<IEnumerable<OrderDetailDto>>(assets.Items)
-            };
-        }*/
 
     }
 }

@@ -8,6 +8,7 @@ using Rookie.Ecom.DataAccessor.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -44,8 +45,8 @@ namespace Rookie.Ecom.Business.Services
 
         public async Task<IEnumerable<OrderDto>> GetAllAsync()
         {
-            var categories = await _baseRepository.GetAllAsync();
-            return _mapper.Map<List<OrderDto>>(categories);
+            var orders = await _baseRepository.GetAllAsync();
+            return _mapper.Map<List<OrderDto>>(orders);
         }
 
         public async Task<OrderDto> GetByIdAsync(Guid id)
@@ -61,32 +62,12 @@ namespace Rookie.Ecom.Business.Services
             return _mapper.Map<OrderDto>(order);
         }
 
-        /*public async Task<OrderDto> GetByNameAsync(string name)
+        public async Task<IEnumerable<OrderDto>> GetAllByAsync(Expression<Func<Order,bool>> filter, string includeProperties = "")
         {
-            var order = await _baseRepository.GetByAsync(x => x.FirstName == name);
-            return _mapper.Map<OrderDto>(order);
+            var orders = await _baseRepository.GetAllByAsync(filter,includeProperties);
+            return _mapper.Map<List<OrderDto>>(orders);
         }
 
-        public async Task<PagedResponseModel<OrderDto>> PagedQueryAsync(string name, int page, int limit)
-        {
-            var query = _baseRepository.Entities;
-
-            query = query.Where(x => string.IsNullOrEmpty(name) || x.FirstName.Contains(name));
-
-            query = query.OrderBy(x => x.FirstName);
-
-            var assets = await query
-                .AsNoTracking()
-                .PaginateAsync(page, limit);
-
-            return new PagedResponseModel<OrderDto>
-            {
-                CurrentPage = assets.CurrentPage,
-                TotalPages = assets.TotalPages,
-                TotalItems = assets.TotalItems,
-                Items = _mapper.Map<IEnumerable<OrderDto>>(assets.Items)
-            };
-        }
-        */
+        
     }
 }
