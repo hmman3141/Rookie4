@@ -39,17 +39,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-page="/Index">Home</a>
                         </li>
-                        @*<li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Dropdown
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </li>*@
+                        
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
@@ -59,21 +49,22 @@
                         <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
                     </form>
                     <div class="justify-content-center ml-xl-5">
-                        <i class="fa-solid fa-user fa-xl mr-2 text-white"></i>
+                        <i class="fa-solid fa-user fa-xl text-white"></i>
                         @*<span class="border-right p-2 mr-4"></span>*@
                         @if (User.Claims.Any())
                         {
-                            @*<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                @User.Claims.Where(x => x.Type == "given_name").FirstOrDefault().Value
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="#">Action</a>
-                            </div>*@
-                            <a class="navbar-text text-decoration-none text-white" asp-area="" asp-page="/Product">@User.Claims.Where(x => x.Type == "given_name").FirstOrDefault().Value</a>
+                            <div class="dropdown" style="display:inline-block">
+                                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    @User.Claims.Where(x => x.Type == "name").FirstOrDefault().Value
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" onclick="onLogoutClick()" href="#">Logout</a>
+                                </div>
+                            </div>
                         }
                         else
                         {
-                            <a class="navbar-text text-decoration-none text-white" asp-area="" asp-page="/Login">Login</a>
+                            <a class="navbar-text text-decoration-none text-white ml-2" onclick="onLoginClick()" href="#">Login</a>
                         }
 
                         <span class="border-right p-2 mr-3"></span>
@@ -87,6 +78,7 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3 position-relative">
+
             @RenderBody()
         </main>
     </div>
@@ -118,6 +110,12 @@
             if (x == "") {
                 return false;
             }
+        }
+        function onLoginClick() {
+            location.href = "/Login?returnUrl=" + window.location.pathname;
+        }
+        function onLogoutClick() {
+            location.href = "/Logout?returnUrl=" + window.location.pathname;
         }
     </script>
     @await RenderSectionAsync("Scripts", required: false)

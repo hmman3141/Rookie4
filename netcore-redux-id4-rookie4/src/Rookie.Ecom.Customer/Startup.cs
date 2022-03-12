@@ -31,8 +31,6 @@ namespace Rookie.Ecom.Customer
             services.AddHttpContextAccessor();
             services.AddBusinessLayer(Configuration);
 
-/*            services.AddMvc();*/
-
             /*JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();*/
 
             services.AddAuthentication(options =>
@@ -43,18 +41,18 @@ namespace Rookie.Ecom.Customer
             .AddCookie("Cookies")
             .AddOpenIdConnect("oidc", options =>
             {
-
+                
                 options.SignInScheme = "Cookies";
                 options.Authority = "https://localhost:5001/";
                 options.RequireHttpsMetadata = true;
-/*                options.CallbackPath = "/Index";*/
+                options.CallbackPath = "/signin-oidc";
+                options.SignedOutCallbackPath = "/signout-callback-oidc";
 
                 options.ClientId = "rookieecomclient";
                 options.ClientSecret = "rookieecomsecret";
                 options.ResponseType = "id_token token";
 
                 options.SaveTokens = true;
-
 
                 options.Scope.Clear();
                 options.Scope.Add("openid");
@@ -65,7 +63,6 @@ namespace Rookie.Ecom.Customer
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     RoleClaimType = "role",
-                    NameClaimType = "given_name" + "family_name"
                 };
             });
         }
@@ -88,7 +85,6 @@ namespace Rookie.Ecom.Customer
             app.UseStaticFiles();
 
             app.UseRouting();
-            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

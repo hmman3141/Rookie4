@@ -14,7 +14,7 @@ namespace Rookie.Ecom.Business.Interfaces
     {
         Task<IEnumerable<ProductDto>> GetAllAsync();
 
-        Task<PagedResponseModel<ProductDto>> PagedQueryAsync(Expression<Func<Product, bool>> filter, int page, int limit, string includeProperties = "");
+        Task<PagedResponseModel<ProductDto>> PagedQueryAsync(String? product, int page, int limit, String? category, int minvalue = 0, int maxvalue = 0, string includeProperties = "");
 
         Task<ProductDto> GetByIdAsync(Guid id);
 

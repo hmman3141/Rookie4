@@ -74,7 +74,7 @@ namespace Rookie.Ecom.Business.Services
             return _mapper.Map<ProductDto>(product);
         }
 
-        public async Task<PagedResponseModel<ProductDto>> PagedQueryAsync(Expression<Func<Product,bool>> filter, int page, int limit, string includeProperties = "")
+        public async Task<PagedResponseModel<ProductDto>> PagedQueryAsync(String? product, int page, int limit, String? category, int minvalue = 0, int maxvalue = 0, string includeProperties = "")
         {
 
             var query = _baseRepository.Entities;
@@ -88,7 +88,16 @@ namespace Rookie.Ecom.Business.Services
                 }
             }
 
-            query = query.Where(filter);
+            if(!string.IsNullOrEmpty(product))
+                query = query.Where(x => x.ProductName == product || x.ProductName.Contains(product));
+
+            if (!string.IsNullOrEmpty(category))
+                query = query.Where(x => x.Category.CategoryName == category);
+
+            if (maxvalue > 0)
+                query = query.Where(x => x.Price <= maxvalue);
+
+            query = query.Where(x => x.Price >= minvalue);
 
             query = query.OrderBy(x => x.ProductName);
 

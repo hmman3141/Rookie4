@@ -25,10 +25,14 @@ class Category extends Component {
     render() {
         return (
             <div>
-                <h1>Weather forecast</h1>
+                <h1>Category</h1>
                 <p>This component demonstrates fetching data from the server and working with URL parameters.</p>
+                <button>Add category</button>
+                <button>Remove category</button>
+                <button>Update category</button>
                 {renderCategoryTable(this.props)}
                 {renderPagination(this.props)}
+                
             </div>
         );
     }
@@ -49,7 +53,7 @@ function renderCategoryTable(props) {
                 {props.categories.map(cat =>
                     <tr key={cat.id}>
                         <td>{cat.id}</td>
-                        <td>{cat.name}</td>
+                        <td>{cat.categoryName}</td>
                         <td>{cat.desc}</td>
                     </tr>
                 )}

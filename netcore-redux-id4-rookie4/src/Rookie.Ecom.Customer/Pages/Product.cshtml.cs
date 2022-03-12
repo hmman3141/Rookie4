@@ -50,9 +50,7 @@ namespace Rookie.Ecom.Customer.Pages
                 minvalue = temp;
             }
 
-
-                products = _productService.PagedQueryAsync(x => String.IsNullOrEmpty(product) ? true : (x.ProductName == product || x.ProductName.Contains(product)) && (category==null)?true:(x.Category.CategoryName == category) && x.Price >= minvalue && (maxvalue == 0) ? true : x.Price <= maxvalue,
-                    curpage, limit, "Category,ProductPictures").Result;
+            products = _productService.PagedQueryAsync(product, curpage, limit, category, minvalue, maxvalue, "Category,ProductPictures").Result;
             
         }
     }
