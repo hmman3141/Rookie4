@@ -24,7 +24,7 @@ namespace Rookie.Ecom.Customer.Pages
 
         public void OnGet(Guid product)
         {
-            productDtos = productService.GetByAsync(x => x.Id == product,"ProductPictures").Result;
+            productDtos = productService.GetByAsync(x => x.Id == product,"ProductPictures,Ratings").Result;
             var ratingCount = ratingService.GetAllByAsync(x => x.ProductID == product, "Product").Result.Count();
             if(ratingCount != 0)
             {

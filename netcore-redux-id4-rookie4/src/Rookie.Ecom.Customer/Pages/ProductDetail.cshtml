@@ -10,7 +10,7 @@
             <div class="container mb-3">
                 <div class="row">
                     <div class="col-sm border bg-white rounded shadow-sm">
-                        <img src="@("/img/" + Model.productDtos.ProductPictures.FirstOrDefault().PictureUrl)" class="w-100"/>
+                        <img src="@("/img/" + Model.productDtos.ProductPictures.FirstOrDefault().PictureUrl)" class="w-100" />
                     </div>
                     <div class="col-sm navbar justify-content-center align-content-center">
                         <div>
@@ -44,7 +44,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
 
 
                     </div>
@@ -58,17 +58,80 @@
             </div>
             <ul class="nav nav-tabs mb-2">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Description</a>
+                    <button class="nav-link active" id="descriptionlink" onclick="onDescriptionClick()">Description</button>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Reviews</a>
+                    <button class="nav-link" id="reviewlink" onclick="onReviewClick()">Reviews</button>
                 </li>
             </ul>
-            <div style="word-wrap:break-word;">
+            <div style="word-wrap:break-word;" class="ml-4 mt-2" id="description">
                 <span>@Model.productDtos.Desc</span>
 
             </div>
+            <div id="review" class="ml-4 mt-2" hidden>
+                @foreach (var rating in Model.productDtos.Ratings)
+                {
+                    <div class="container mt-4">
+                        <div class="row">
+                            <div class="col-1">
+                                <button class="btn-sm rounded-pill border-0 btn-ligth" style="right: 50px; bottom: 80px; width: 2.5rem; height: 2.5rem; padding-top:6px;">
+                                    <i class="fa-solid fa-user fa-2xl"></i>
+                                </button>
+                            </div>
+                            <div class="col-sm" style="word-wrap:break-word;">
+                                <div>
+                                    <span class="h6 mr-3">Name</span>
+                                    @for (int i = 0; i < rating.Rate; i++)
+                                    {
+                                        <i class="fa-solid fa-star text-warning"></i>
+                                    }
+                                    @for (int i = 0; i < 5 - rating.Rate; i++)
+                                    {
+                                        <i class="fa-regular fa-star text-warning"></i>
+                                    }
+                                </div>
+                                <div style="word-wrap:break-word;">
+                                    @rating.Comment
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                }
+                <div class="container mt-4">
+                    <div class="row">
+                        <div class="col-1">
+                            <button class="btn-sm rounded-pill border-0 btn-ligth" style="right: 50px; bottom: 80px; width: 2.5rem; height: 2.5rem; padding-top:6px;">
+                                <i class="fa-solid fa-user fa-2xl"></i>
+                            </button>
+                        </div>
+                        <div class="col-sm" style="word-wrap:break-word;">
+                            <span class="h6 mr-3">Name</span>
+                            <form method="post" asp-controller="Rating" asp-action="Index">
+                                <div class="d-flex my-3">
+                                    <p class="mb-0 mr-2">Your rating :</p>
+                                    <div class="text-primary">
+                                        <div onclick="CRate(1)" href="" class="ratingStar fas fa-star text-warning" value="1" style="cursor:pointer"></div>
+                                        <div onclick="CRate(2)" href="" class="ratingStar fas fa-star text-warning" value="2" style="cursor:pointer"></div>
+                                        <div onclick="CRate(3)" href="" class="ratingStar fas fa-star text-warning" value="3" style="cursor:pointer"></div>
+                                        <div onclick="CRate(4)" href="" class="ratingStar fas fa-star text-warning" value="4" style="cursor:pointer"></div>
+                                        <div onclick="CRate(5)" href="" class="ratingStar fas fa-star text-warning" value="5" style="cursor:pointer"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <textarea id="message" name="comment" cols="30" rows="5" class="form-control"></textarea>
+                                </div>
+                                <div class="form-group mb-0">
+                                    <input id="Rating" name="rating" value="5" hidden />
+                                    <input name="productId" value="@Model.productDtos.Id" hidden />
+                                    <input type="submit" value="Leave Your Review" class="btn btn-dark px-3">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
         <div class="col-sm ml-lg-5 p-3">
             <span class="h5">Similar products</span>
             <div class="border bg-white pt-2 pb-2 mt-3 shadow-sm">
@@ -106,15 +169,49 @@
         </div>
     </div>
 </div>
+@section scripts{
+    <script>
+        $(".ratingStar").hover(function () {
+            $(".ratingStar").addClass("far").removeClass("fas");
+
+            $(this).addClass("fas").removeClass("far");
+            $(this).prevAll(".ratingStar").addClass("fas").removeClass("far");
+        });
+        function CRate(r) {
+            $("#Rating").val(r);
+
+        }
+    </script>
+}
 <script>
     function onChangeQuantity(choice) {
         var num = parseInt(document.getElementById("quantity").innerHTML.toString());
         if (choice === "0") {
             if (num !== 1) {
                 document.getElementById("quantity").innerHTML = (num - 1).toString();
-            } 
+            }
         } else {
             document.getElementById("quantity").innerHTML = (num + 1).toString();
+        }
+    }
+
+    function onDescriptionClick() {
+        document.getElementById("reviewlink").className = document.getElementById("reviewlink").className.split(" active")[0];
+        var descriptionlist = document.getElementById("descriptionlink").className.split(" active");
+        if (descriptionlist.length == 1) {
+            document.getElementById("descriptionlink").className = descriptionlist[0] + " active";
+            document.getElementById("description").hidden = false;
+            document.getElementById("review").hidden = true;
+        }
+    }
+
+    function onReviewClick() {
+        document.getElementById("descriptionlink").className = document.getElementById("descriptionlink").className.split(" active")[0];
+        var reviewlist = document.getElementById("reviewlink").className.split(" active");
+        if (reviewlist.length == 1) {
+            document.getElementById("reviewlink").className = reviewlist[0] + " active";
+            document.getElementById("description").hidden = true;
+            document.getElementById("review").hidden = false;
         }
     }
 </script>
