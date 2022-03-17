@@ -48,6 +48,12 @@ namespace Rookie.Ecom.Business.Services
             return _mapper.Map<List<RatingDto>>(ratings);
         }
 
+        public async Task<RatingDto> GetByAsync(Expression<Func<Rating, bool>> filter, string includeProperties = "")
+        {
+            var ratings = await _baseRepository.GetByAsync(filter, includeProperties);
+            return _mapper.Map<RatingDto>(ratings);
+        }
+
         public async Task<IEnumerable<RatingDto>> GetAllByAsync(Expression<Func<Rating,bool>> filter, string includeProperties = "")
         {
             var ratings = await _baseRepository.GetAllByAsync(filter, includeProperties);

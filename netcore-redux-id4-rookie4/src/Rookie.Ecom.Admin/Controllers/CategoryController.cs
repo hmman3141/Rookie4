@@ -53,6 +53,10 @@ namespace Rookie.Ecom.Admin.Controllers
         public async Task<IEnumerable<CategoryDto>> GetAsync()
             => await _categoryService.GetAllAsync();
 
+        [HttpGet("name/{name}")]
+        public async Task<CategoryDto> GetByNameAsync(string name)
+            => await _categoryService.GetByAsync(x => x.CategoryName == name);
+
         [HttpGet("find")]
         public async Task<PagedResponseModel<CategoryDto>>
             FindAsync(string name, int page = 1, int limit = 10)

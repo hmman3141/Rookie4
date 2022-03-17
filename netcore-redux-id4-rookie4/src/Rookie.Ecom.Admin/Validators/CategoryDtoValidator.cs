@@ -28,13 +28,13 @@ namespace Rookie.Ecom.Admin.Validators
                .WithMessage(string.Format(ErrorTypes.Common.MaxLengthError, ValidationRules.CategoryRules.MaxLenghCharactersForDesc))
                .When(m => !string.IsNullOrWhiteSpace(m.Desc));
 
-            RuleFor(x => x).MustAsync(
+            /*RuleFor(x => x).MustAsync(
              async (dto, cancellation) =>
              {
                  var exit = await categoryService.GetByNameAsync(dto.CategoryName);
                  return exit == null || exit.Id != dto.Id;
              }
-          ).WithMessage("Duplicate record");
+          ).WithMessage("Duplicate record");*/
         }
     }
 }

@@ -50,17 +50,7 @@ namespace Rookie.Ecom.Identity
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-                new IdentityResource("roles", "Your role(s)", new List<string>() { "role" })
-
-            };
-        }
-
-        public static IEnumerable<ApiResource> GetApiResources()
-        {
-            return new List<ApiResource>
-            {
-                new ApiResource("ApiOne"),
-                new ApiResource("ApiTwo")
+                new IdentityResource("roles", "Your role(s)", new List<string>() { "role" }),
             };
         }
 
@@ -85,7 +75,7 @@ namespace Rookie.Ecom.Identity
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "roles"
+                        "roles",
                     },
                     ClientSecrets =
                     {

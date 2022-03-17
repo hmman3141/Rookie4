@@ -16,7 +16,16 @@
                     <span class="h5 text-white">SHOP BY</span>
                 </div>
                 <div class="pl-3 pt-2 pb-2">
-                    <span class="h6">CATEGORY</span>
+                    <div class="container-fluid m-0 p-0">
+                        <div class="row mb-0">
+                            <div class="col-sm">
+                                <span class="h6">CATEGORY</span>
+                            </div>
+                            <div class="col-sm text-right pr-5 pb-0 pt-0 m-0">
+                                <a class="text-dark h6" href="/Product">All</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 @foreach (var category in Model.categories)
                 {
@@ -139,18 +148,15 @@
                         }
                         <div class="col-sm mb-3">
                             <div class="shadow-sm">
-                                <div class="text-center bg-white pt-2 pb-3 pl-2 pr-2" style="cursor:pointer" onclick="onProductClick('@(product.Id)')" asp-page="/ProductDetail?product=@(product.Id)">
+                                <div class="text-center bg-white pt-2 pb-3 pl-2 pr-2" style="cursor:pointer;height:315px" onclick="onProductClick('@(product.Id)')" asp-page="/ProductDetail?product=@(product.Id)">
                                     <div>
-                                        <img src="@("/img/" + product.ProductPictures.FirstOrDefault().PictureUrl)" class="rounded" alt="..." style="width: 200px; height: 200px; object-fit: contain;">
+                                        <img src="@("https://localhost:5011/product/" + product.ProductPictures.FirstOrDefault().PictureUrl)" class="rounded" alt="..." style="width: 200px; height: 200px; object-fit: contain;">
                                     </div>
                                     <div class="mt-3 mb-1">
                                         <span class="h5">@product.ProductName</span>
                                     </div>
                                     <div class="mb-1">
-                                        <span class="h6" id="abc">$@product.Price</span>
-                                    </div>
-                                    <div>
-                                        <span>Star</span>
+                                        <span class="" id="abc">$@product.Price</span>
                                     </div>
                                 </div>
                                 <div class="input-group">

@@ -55,7 +55,7 @@ class ProfilePage extends Component {
 
 function mapStateToProps(state) {
   return {
-    user: state.oidc.user
+      user: state.oidc.user,
   };
 }
 

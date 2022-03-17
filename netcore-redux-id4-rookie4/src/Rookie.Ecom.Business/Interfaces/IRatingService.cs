@@ -14,11 +14,9 @@ namespace Rookie.Ecom.Business.Interfaces
     {
         Task<IEnumerable<RatingDto>> GetAllAsync();
 
-        // Task<PagedResponseModel<RatingDto>> PagedQueryAsync(string name, int page, int limit);
-
         Task<RatingDto> GetByIdAsync(Guid id);
 
-        // Task<RatingDto> GetByNameAsync(string name);
+        Task<RatingDto> GetByAsync(Expression<Func<Rating, bool>> filter, string includeProperties = "");
 
         Task<RatingDto> AddAsync(RatingDto RatingDto);
 

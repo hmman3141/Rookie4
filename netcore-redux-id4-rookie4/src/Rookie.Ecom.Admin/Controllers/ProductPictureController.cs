@@ -53,6 +53,10 @@ namespace Rookie.Ecom.Admin.Controllers
         public async Task<IEnumerable<ProductPictureDto>> GetAsync()
             => await _productPictureService.GetAllAsync();
 
+        [HttpGet("product/{id}")]
+        public async Task<IEnumerable<ProductPictureDto>> GetByProductIdAsync(Guid id)
+            => await _productPictureService.GetAllByProductIdAsync(id);
+
         /*[HttpGet("find")]
         public async Task<PagedResponseModel<ProductPictureDto>>
             FindAsync(string name, int page = 1, int limit = 10)

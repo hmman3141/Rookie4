@@ -16,8 +16,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Rookie.Ecom.Identity.Quickstart.UI;
 using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace IdentityServerHost.Quickstart.UI
@@ -66,7 +68,6 @@ namespace IdentityServerHost.Quickstart.UI
         [HttpGet]
         public async Task<IActionResult> Login(string returnUrl)
         {
-            Console.WriteLine(returnUrl);
             // build a model so we know what to show on the login page
             var vm = await BuildLoginViewModelAsync(returnUrl);
 
@@ -145,7 +146,7 @@ namespace IdentityServerHost.Quickstart.UI
 
                     var isuser = new IdentityServerUser(user.Id)
                     {
-                        DisplayName = userClaims.Where(x => x.Type == "name").FirstOrDefault().Value,
+                        DisplayName = userClaims.Where(x => x.Type == JwtClaimTypes.FamilyName).FirstOrDefault().Value +" "+ userClaims.Where(x => x.Type == JwtClaimTypes.GivenName).FirstOrDefault().Value,
                         AdditionalClaims = userClaims
                     };
 
@@ -306,7 +307,48 @@ namespace IdentityServerHost.Quickstart.UI
             }
             if (vm.AutomaticRedirectAfterSignOut && !string.IsNullOrWhiteSpace(vm.PostLogoutRedirectUri))
                 return Redirect(vm.PostLogoutRedirectUri);
+
             return View("LoggedOut", vm);
+        }
+
+        [HttpGet]
+        public IActionResult Register(string returnUrl)
+        {
+            return View(new RegisterViewModel{ redirectUrl = returnUrl});
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel model)
+        {
+            var user = new IdentityUser
+            {
+                UserName = model.UserName
+            };
+
+            var result = await _userManager.CreateAsync(user, model.Password);
+
+            if (!result.Succeeded)
+            {
+                throw new Exception(result.Errors.First().Description);
+            }
+
+            result = await _userManager.AddClaimsAsync(user, new Claim[]{
+                            new Claim(JwtClaimTypes.FamilyName, model.FirstName),
+                            new Claim(JwtClaimTypes.GivenName, model.LastName),
+                            new Claim(JwtClaimTypes.Role,"User")
+                        });
+
+            if (!result.Succeeded)
+            {
+                throw new Exception(result.Errors.First().Description);
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.redirectUrl))
+            {
+                return Redirect(model.redirectUrl);
+            }
+
+            return View("RegistrationSuccess");
         }
 
         [HttpGet]

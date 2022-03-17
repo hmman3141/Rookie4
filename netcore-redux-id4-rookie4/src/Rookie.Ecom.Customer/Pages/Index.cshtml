@@ -5,6 +5,7 @@
     Layout = "./Shared/_Layout.cshtml";
 }
 
+
 <div>
     <div class="text-center">
         <h1 class="display-4 m-xl-5">Welcome</h1>
@@ -44,7 +45,7 @@
                     <div class="border rounded bg-white shadow-sm">
                         <div class="text-center pt-2 pb-3 pl-2 pr-2" style="cursor:pointer" onclick="onProductClick('@(product.Id)')" asp-page="/ProductDetail?product=@(product.Id)">
                             <div>
-                                <img src="@("/img/" + product.ProductPictures.FirstOrDefault().PictureUrl)" class="rounded" alt="..." style="width: 150px; height: 150px; object-fit: contain;">
+                                <img src="@("https://localhost:5011/product/" + product.ProductPictures.FirstOrDefault().PictureUrl)" class="rounded" alt="..." style="width: 150px; height: 150px; object-fit: contain;">
                             </div>
                             <div class="mt-3 mb-1">
                                 <span class="h5" style="font-weight:400;">@product.ProductName</span>

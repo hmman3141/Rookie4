@@ -67,11 +67,8 @@ namespace Rookie.Ecom.Identity
             services.AddIdentityServer()
                 .AddAspNetIdentity<IdentityUser>()
                 .AddDeveloperSigningCredential()
-                /*.AddTestUsers(TestUsers.Users)
-                .AddTestUsers(InitData.GetUsers())*/
                 .AddInMemoryIdentityResources(InitData.GetIdentityResources())
                 .AddInMemoryClients(InitData.GetClients())
-                /*.AddProfileService<IdentityProfileService>()*/
                 .AddConfigurationStore(options =>
                 {
                     options.ConfigureDbContext = b => b.UseSqlServer(connectionString,

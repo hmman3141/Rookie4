@@ -54,11 +54,13 @@ namespace Rookie.Ecom.Customer
 
                 options.SaveTokens = true;
 
+                options.ClaimActions.MapUniqueJsonKey("role", "role");
+
                 options.Scope.Clear();
                 options.Scope.Add("openid");
                 options.Scope.Add("profile");
                 options.Scope.Add("roles");
-                options.ClaimActions.MapUniqueJsonKey("role", "role");
+
                 options.GetClaimsFromUserInfoEndpoint = true;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
@@ -85,6 +87,7 @@ namespace Rookie.Ecom.Customer
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

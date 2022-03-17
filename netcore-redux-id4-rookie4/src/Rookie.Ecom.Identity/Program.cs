@@ -27,10 +27,7 @@ namespace Rookie.Ecom.Identity
                     .GetRequiredService<UserManager<IdentityUser>>();
 
                 var user = new IdentityUser("User1");
-                /*userManager.CreateAsync(user, "u123").GetAwaiter().GetResult();*/
-                /*userManager.AddClaimAsync(userManager.FindByNameAsync("User1").GetAwaiter().GetResult(),new Claim(ClaimTypes.Name,"Hua Minh Man"));*/
-               /* userManager.AddClaimAsync(userManager.FindByNameAsync("User1").GetAwaiter().GetResult(), new Claim(ClaimTypes.Role, "Hua Minh Man"));*/
-
+                
                 serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
 
                 var context = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
