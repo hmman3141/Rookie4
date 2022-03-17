@@ -28,36 +28,38 @@ class User extends Component {
                 <h1>User</h1>
                 <p>This component demonstrates fetching data from the server and working with URL parameters.</p>
                 
-                {user ? renderUserTable(users) : <span>You are not allowed to do this!</span>}
-                {user ? renderPagination(users) : []}
+                {user ? renderUserTable(users,user) : <span>Please login!</span>}
+                {user ? renderPagination(users,user) : []}
             </div>
         );
     }
 }
 
-function renderUserTable(props) {
-    return (
-        <table className='table table-striped'>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>First name</th>
-                    <th>Last name</th>
-                    <th>Created date</th>
-                </tr>
-            </thead>
-            <tbody>
-                {props.users.map(user =>
-                    <tr key={user.id}>
-                        <td>{user.id}</td>
-                        <td>{user.firstName}</td>
-                        <td>{user.lastName}</td>
-                        <td>{new Date(user.createdDate).toUTCString()}</td>
+function renderUserTable(props, user) {
+    if (user.profile['role'] === 'Admin')
+        return (
+            <table className='table table-striped'>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>First name</th>
+                        <th>Last name</th>
+                        <th>Created date</th>
                     </tr>
-                )}
-            </tbody>
-        </table>
-    );
+                </thead>
+                <tbody>
+                    {props.users.map(user =>
+                        <tr key={user.id}>
+                            <td>{user.id}</td>
+                            <td>{user.firstName}</td>
+                            <td>{user.lastName}</td>
+                            <td>{new Date(user.createdDate).toUTCString()}</td>
+                        </tr>
+                    )}
+                </tbody>
+            </table>
+        );
+    else return <span>You are not allowed to do this!</span>
 }
 
 function renderPagination(props, user = "") {

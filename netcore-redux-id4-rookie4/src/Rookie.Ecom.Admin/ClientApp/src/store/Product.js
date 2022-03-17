@@ -46,7 +46,6 @@ export const actionCreators = {
         if (name !== "") {
             const response = await axios.get(localhost + "/containname/" + name);
             const products = response.data;
-
             dispatch({ type: receiveProductType, page, products });
         } else {
             dispatch({ type: requestProductType, page });

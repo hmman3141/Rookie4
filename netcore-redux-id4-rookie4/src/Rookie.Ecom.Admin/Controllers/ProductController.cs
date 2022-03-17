@@ -76,7 +76,7 @@ namespace Rookie.Ecom.Admin.Controllers
 
         [HttpGet("containname/{name}")]
         public async Task<IEnumerable<ProductDto>> GetByContainNameAsync(string name)
-            => await _productService.GetAllByAsync(x => x.ProductName == name || x.ProductName.Contains(name), "Category");
+            => await _productService.GetAllByAsync(x => x.ProductName == name || x.ProductName.Contains(name));
 
         [HttpGet]
         public async Task<IEnumerable<ProductDto>> GetAsync()
