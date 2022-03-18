@@ -36,11 +36,12 @@ namespace Rookie.Ecom.Customer.Pages
         private RatingDto ratingDto = new RatingDto();
         public async Task<IActionResult> OnPostRatingAsync(string comment, int rating, string product, string user)
         {
+            Console.WriteLine(user);
             ratingDto.CreatedDate = DateTime.Now;
             ratingDto.UpdatedDate = DateTime.Now;
             ratingDto.Pubished = true;
             ratingDto.ProductID = Guid.Parse(product);
-            if(user != "")
+            if (!string.IsNullOrWhiteSpace(user))
             {
                 ratingDto.UserID = Guid.Parse(user);
             }

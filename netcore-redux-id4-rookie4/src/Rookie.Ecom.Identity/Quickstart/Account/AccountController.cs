@@ -329,7 +329,7 @@ namespace IdentityServerHost.Quickstart.UI
 
             if (!result.Succeeded)
             {
-                throw new Exception(result.Errors.First().Description);
+                return View("RegistrationFail");
             }
 
             result = await _userManager.AddClaimsAsync(user, new Claim[]{
@@ -337,11 +337,6 @@ namespace IdentityServerHost.Quickstart.UI
                             new Claim(JwtClaimTypes.GivenName, model.LastName),
                             new Claim(JwtClaimTypes.Role,"User")
                         });
-
-            if (!result.Succeeded)
-            {
-                throw new Exception(result.Errors.First().Description);
-            }
 
             if (!string.IsNullOrWhiteSpace(model.redirectUrl))
             {

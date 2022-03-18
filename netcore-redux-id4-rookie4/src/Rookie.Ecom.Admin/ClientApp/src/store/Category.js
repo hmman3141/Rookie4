@@ -57,6 +57,12 @@ export const actionCreators = {
                     "imageUrl": iconname
                 });
                 alert("Success!");
+                const url = `api/Category/find?page=0`;
+                const responseGet = await fetch(url);
+                const data = await responseGet.json();
+                const categories = data.items;
+                var page = 0;
+                dispatch({ type: receiveCategoryType, page, categories });
             }
         }
         else {
