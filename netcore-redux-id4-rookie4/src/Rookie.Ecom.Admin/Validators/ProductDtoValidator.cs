@@ -23,6 +23,29 @@ namespace Rookie.Ecom.Admin.Validators
                .WithMessage(string.Format(ErrorTypes.Common.MaxLengthError, ValidationRules.CommonRules.MaxLenghCharactersForText))
                .When(m => !string.IsNullOrWhiteSpace(m.ProductName));
 
+            RuleFor(m => m.Price)
+                  .NotEmpty()
+                  .WithMessage(x => string.Format(ErrorTypes.Common.RequiredError, nameof(x.Price)));
+
+            RuleFor(m => m.Price)
+               .LessThan(100000000)
+               .WithMessage(string.Format("Price must be less than {0}", 100000000))
+               .When(m => m.Price > 0);
+
+            RuleFor(m => m.Price)
+               .GreaterThan(0)
+               .WithMessage(string.Format("Price must be greater than {0}",0))
+               .When(m => m.Price < 0);
+
+            RuleFor(m => m.Quantity)
+               .GreaterThanOrEqualTo(0)
+               .WithMessage(string.Format("Quantity must be greater than or equal to {0}", 0))
+               .When(m => m.Quantity < 0);
+
+            RuleFor(m => m.IsFeatured)
+                 .NotNull()
+                 .WithMessage(x => string.Format(ErrorTypes.Common.RequiredError, nameof(x.IsFeatured)));
+
             /*RuleFor(x => x).MustAsync(
              async (dto, cancellation) =>
              {

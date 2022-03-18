@@ -14,6 +14,14 @@ namespace Rookie.Ecom.Admin.Validators
                  .NotNull()
                  .WithMessage(x => string.Format(ErrorTypes.Common.RequiredError, nameof(x.Id)));
 
+            RuleFor(m => m.TotalAmount)
+               .GreaterThanOrEqualTo(0)
+               .WithMessage(string.Format("Price must be greater than or equal to {0}", 0))
+               .When(m => m.TotalAmount < 0);
+
+            RuleFor(m => m.ShippingAddress)
+                 .NotNull()
+                 .WithMessage(x => string.Format(ErrorTypes.Common.RequiredError, nameof(x.ShippingAddress)));
 
             /*RuleFor(x => x).MustAsync(
              async (dto, cancellation) =>

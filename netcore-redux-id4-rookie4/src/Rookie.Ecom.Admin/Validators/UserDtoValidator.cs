@@ -23,13 +23,22 @@ namespace Rookie.Ecom.Admin.Validators
                .WithMessage(string.Format(ErrorTypes.Common.MaxLengthError, ValidationRules.CommonRules.MaxLenghCharactersForText))
                .When(m => !string.IsNullOrWhiteSpace(m.FirstName));
 
-            RuleFor(x => x).MustAsync(
+            RuleFor(m => m.LastName)
+                  .NotEmpty()
+                  .WithMessage(x => string.Format(ErrorTypes.Common.RequiredError, nameof(x.LastName)));
+
+            RuleFor(m => m.LastName)
+               .MaximumLength(ValidationRules.CommonRules.MaxLenghCharactersForText)
+               .WithMessage(string.Format(ErrorTypes.Common.MaxLengthError, ValidationRules.CommonRules.MaxLenghCharactersForText))
+               .When(m => !string.IsNullOrWhiteSpace(m.LastName));
+
+            /*RuleFor(x => x).MustAsync(
              async (dto, cancellation) =>
              {
                  var exit = await UserService.GetByNameAsync(dto.FirstName);
                  return exit == null || exit.Id != dto.Id;
              }
-          ).WithMessage("Duplicate record");
+          ).WithMessage("Duplicate record");*/
         }
     }
 }

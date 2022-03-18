@@ -14,7 +14,23 @@ namespace Rookie.Ecom.Admin.Validators
                  .NotNull()
                  .WithMessage(x => string.Format(ErrorTypes.Common.RequiredError, nameof(x.Id)));
 
+            RuleFor(m => m.PictureUrl)
+                 .NotNull()
+                 .WithMessage(x => string.Format(ErrorTypes.Common.RequiredError, nameof(x.PictureUrl)));
 
+            RuleFor(m => m.PictureUrl)
+               .MaximumLength(ValidationRules.CommonRules.MaxLenghCharactersForText)
+               .WithMessage(string.Format(ErrorTypes.Common.MaxLengthError, ValidationRules.CommonRules.MaxLenghCharactersForText))
+               .When(m => !string.IsNullOrWhiteSpace(m.PictureUrl));
+
+            RuleFor(m => m.Title)
+                 .NotNull()
+                 .WithMessage(x => string.Format(ErrorTypes.Common.RequiredError, nameof(x.Title)));
+
+            RuleFor(m => m.Title)
+               .MaximumLength(ValidationRules.CommonRules.MaxLenghCharactersForText)
+               .WithMessage(string.Format(ErrorTypes.Common.MaxLengthError, ValidationRules.CommonRules.MaxLenghCharactersForText))
+               .When(m => !string.IsNullOrWhiteSpace(m.Title));
             /*RuleFor(x => x).MustAsync(
              async (dto, cancellation) =>
              {
